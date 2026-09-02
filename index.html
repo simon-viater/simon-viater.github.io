@@ -1,1191 +1,132 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Šimon Viater — financial modelling portfolio">
+  <title>Šimon Viater — Financial Modelling Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--blue:#0F3D6B;--ink:#15181B;--muted:#8B9198;--line:#DDDFDA;--paper:#F4F5F2;--white:#fff;--office:#1F4E8C;--lab:#17685A;--retail:#9C6A0B}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--blue);color:#fff;font-family:Archivo,system-ui,sans-serif}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    ::selection{background:rgba(255,255,255,.24)}
+    .wrap{max-width:1120px;margin:0 auto;padding-left:32px;padding-right:32px}
+    .top{padding-top:26px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+    .brand{font-size:19px;font-weight:600}
+    .nav{display:flex;gap:22px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:11px 22px;font:11.5px 'IBM Plex Mono',monospace}
+    .nav a{color:rgba(255,255,255,.62)} .nav a.active,.nav a:hover{color:#fff}
+    .pill-btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:11px 20px;background:#fff;color:var(--blue);font:11.5px 'IBM Plex Mono',monospace}
+    .hero{padding-top:74px;padding-bottom:90px}
+    h1{font-size:clamp(46px,7.4vw,96px);line-height:.94;letter-spacing:-.03em;font-weight:700;margin:0 0 14px;max-width:19ch}
+    .intro{margin:0 0 46px;font-size:16px;line-height:1.6;color:rgba(255,255,255,.78);max-width:54ch}
+    .project-head,.project-row{display:grid;grid-template-columns:44px minmax(0,1fr) 150px 90px;gap:18px;align-items:center}
+    .project-head{font:10px 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55);padding-bottom:12px;border-bottom:2px solid #fff}
+    .project-row{min-height:92px;padding:24px 0;border-bottom:2px solid #fff;cursor:pointer;transition:.2s ease}
+    .project-row:hover{background:#fff;color:var(--blue);padding-left:24px;padding-right:22px;margin-left:-22px;margin-right:-22px}
+    .project-row.dim{opacity:.65;border-bottom-style:dashed}
+    .project-row.dim:hover{opacity:1;border-bottom-style:solid}
+    .num,.year{font:11.5px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.6)}
+    .project-row:hover .num,.project-row:hover .year{color:rgba(15,61,107,.55)}
+    .project-title{margin:0;font-size:clamp(26px,3.6vw,42px);font-weight:600;line-height:1;color:rgba(255,255,255,.72)}
+    .project-row:hover .project-title{color:var(--blue)}
+    .tag{justify-self:start;font:10.5px 'IBM Plex Mono',monospace;border-radius:999px;padding:6px 12px;border:1px solid rgba(255,255,255,.5);color:rgba(255,255,255,.85)}
+    .project-row:hover .tag{border-color:rgba(15,61,107,.4);color:var(--blue)}
+    .section{border-top:2px solid rgba(255,255,255,.35)}
+    .section-inner{padding-top:60px;padding-bottom:60px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:48px}
+    .label{margin:0;font:10.5px 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+    .copy{font-size:15px;line-height:1.7;color:rgba(255,255,255,.78);max-width:66ch;margin:0}
+    .copy + .copy{margin-top:20px}
+    .skills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 40px}
+    .skill{display:flex;flex-direction:column;gap:8px}.skill-k{font:10.5px 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55)}.skill-v{font-size:14.5px;line-height:1.7;color:rgba(255,255,255,.86)}
+    .contact-big{margin:0 0 26px;font-size:32px;line-height:1.2;font-weight:600;max-width:30ch}
+    .contact-links{display:flex;flex-wrap:wrap;gap:12px}.outline{display:inline-flex;border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:12px 22px;font:12px 'IBM Plex Mono',monospace}.outline:hover{background:rgba(255,255,255,.12);border-color:#fff}
+    .meta{margin:24px 0 0;font:12px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.6)}
+    footer{border-top:2px solid rgba(255,255,255,.35)} footer .wrap{padding-top:22px;padding-bottom:22px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font:11px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.55)}
+
+    .overlay{position:fixed;inset:0;background:rgba(8,26,46,.45);z-index:50;opacity:0;pointer-events:none;transition:opacity .25s ease}.overlay.open{opacity:1;pointer-events:auto}
+    .panel{position:fixed;top:0;right:0;bottom:0;width:min(1140px,97vw);background:var(--paper);color:var(--ink);font-family:"Times New Roman",Times,serif;font-size:16.5px;line-height:1.55;overflow-y:auto;z-index:51;transform:translateX(46px);opacity:0;pointer-events:none;box-shadow:-30px 0 80px -32px rgba(0,0,0,.5);transition:transform .38s cubic-bezier(.22,1,.36,1),opacity .25s ease}.panel.open{transform:translateX(0);opacity:1;pointer-events:auto}
+    .panel-head{position:sticky;top:0;z-index:3;background:var(--paper);border-bottom:1px solid var(--ink);padding:16px 34px;display:flex;align-items:center;justify-content:space-between;gap:20px}.crumb{font:11.5px Archivo,sans-serif;letter-spacing:.17em;text-transform:uppercase;color:var(--muted)}.close{font:12.5px "Times New Roman",serif;letter-spacing:.06em;background:transparent;border:1px solid #C4C7C0;color:#5A6169;padding:6px 13px;cursor:pointer}.close:hover{border-color:var(--ink);color:var(--ink)}
+    .panel-grid{display:grid;grid-template-columns:306px minmax(0,1fr);align-items:start}.rail{position:sticky;top:58px;padding:28px 26px 40px;border-right:1px solid var(--line)}.body{padding:26px 34px 80px 28px;min-width:0}.eyebrow,.minor{font-size:11.5px;letter-spacing:.17em;text-transform:uppercase;color:var(--muted)}.panel h2{font-size:clamp(28px,3.2vw,40px);font-weight:600;line-height:1.05;letter-spacing:-.005em;margin:10px 0 0}.stand{margin:10px 0 0;font:13.5px Arial,sans-serif;color:#5A6169}.facts-title{font-size:12.5px;letter-spacing:.17em;text-transform:uppercase;color:var(--muted)}.fact{padding:20px 0;border-top:1px solid var(--line)}.fact b{display:block;font-size:36px;font-weight:600;letter-spacing:-.01em;margin-top:8px;line-height:1}.fact span{display:block;font:13.5px Arial,sans-serif;color:#5A6169;margin-top:8px;line-height:1.5}
+    .fact-band{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--ink);border-bottom:1px solid var(--line);margin-top:24px}.fact-band .fact{padding:18px 16px 20px 0;border-top:0;border-right:1px solid var(--line)}.fact-band .fact b{font-size:27px}
+    .panel-block{margin-top:30px;padding-bottom:24px;border-bottom:1px solid var(--line)}.panel h3{font-size:15.5px;font-weight:600;margin:7px 0 12px}.panel-p{margin:0;font-size:15.5px;line-height:1.6;max-width:66ch}.subtle{margin:10px 0 0;font:13.5px Arial,sans-serif;color:#5A6169}
+    .findings{display:flex;flex-direction:column}.finding{padding:11px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;font-size:15px}.finding b{color:var(--office);font:600 13px Archivo,sans-serif}
+    .tool-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.tool{font-size:12.5px;padding:3px 10px;background:#E7EDF6;color:var(--office)}.tool.green{background:#E2EFEB;color:var(--lab)}
+    .dash-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:34px}.floor-row{display:flex;align-items:stretch;gap:10px;margin-bottom:3px}.floor-l{width:24px;flex:none;display:flex;align-items:center;justify-content:flex-end;color:var(--muted);font-size:11.5px}.floor-bar{height:23px;display:flex;align-items:center;justify-content:center;font-size:11px;position:relative;transition:.15s}.floor-bar:hover{transform:translateX(3px);outline:2px solid var(--ink);outline-offset:2px}.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:18px}.legend span{font:12px Arial,sans-serif;color:#5A6169;display:flex;align-items:center;gap:6px}.dot{width:12px;height:12px;display:inline-block}.break-dot{width:7px;height:7px;border-radius:50%;background:#A33227}
+    .bar-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(80px,2fr) auto;gap:10px;align-items:center;margin:0 0 9px}.bar-label{font-size:13px;color:#5A6169}.track{background:#ECEEEB;height:18px}.fill{height:100%}.bar-val{font:12.5px Arial,sans-serif;color:#5A6169;white-space:nowrap}
+    .table-wrap{overflow-x:auto;margin-top:16px}.data-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;min-width:720px}.data-table th{font:11px Archivo,sans-serif;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-weight:400;text-align:left;padding:0 12px 10px 0;border-bottom:1px solid var(--ink);white-space:nowrap}.data-table td{padding:11px 12px 11px 0;border-bottom:1px solid var(--line);font-size:13.5px;white-space:nowrap}.data-table td.r{text-align:right}.badge{font-size:11px;letter-spacing:.03em;padding:2px 8px;display:inline-block}.available{color:#8B9198;font-style:italic}.tfoot td{border-top:1.5px solid var(--ink);font-weight:500;padding-top:13px}.note{margin:18px 0 0;font:12px Arial,sans-serif;color:#8B9198;line-height:1.8;border-top:1px solid var(--line);padding-top:16px}
+    .image-frame{overflow:auto;border:1px solid #C4C7C0;background:#fff}.image-frame img{display:block;width:1006px;max-width:none}.caption{margin:8px 0 0;font:12px Arial,sans-serif;color:#8B9198}
+    .kv-table{display:flex;flex-direction:column}.kv-row{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr) minmax(0,1.6fr);gap:14px;padding:10px 0;border-bottom:1px solid var(--line);align-items:baseline}.kv-row span:nth-child(1){color:#5A6169;font-size:13.5px}.kv-row span:nth-child(2){font-size:15px;font-weight:500}.kv-row span:nth-child(3){font:12.5px Arial,sans-serif;color:#8B9198}
+    .su{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--ink)}.su-col{padding:20px 28px 24px 0}.su-col+ .su-col{padding:20px 0 24px 28px;border-left:1px solid var(--line)}.su-head{font:11px Archivo,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8B9198}.money-row{display:grid;grid-template-columns:minmax(0,1fr) 84px 56px;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);align-items:baseline}.money-row span:nth-child(2),.money-row span:nth-child(3){text-align:right}.total-row{display:grid;grid-template-columns:minmax(0,1fr) 84px 56px;gap:10px;padding-top:11px;border-top:1.5px solid var(--ink)}.balanced{margin:14px 0 0;font:12.5px Arial,sans-serif;color:var(--lab)}
+    @media (max-width:820px){.project-head,.project-row{grid-template-columns:32px minmax(0,1fr) 90px}.project-head span:nth-child(3),.project-head span:nth-child(4),.project-row .year{display:none}.skills{grid-template-columns:1fr}.section-inner{grid-template-columns:1fr;gap:24px}.panel-grid{display:block}.rail{display:none}.body{padding:22px 22px 60px}.fact-band{grid-template-columns:repeat(2,minmax(0,1fr));gap:0}.fact-band .fact:nth-child(even){border-right:0}.dash-grid,.su{grid-template-columns:1fr;gap:24px}.su-col,.su-col+.su-col{padding:20px 0 24px;border-left:0}.top .nav{order:3;width:100%;justify-content:center}.wrap{padding-left:20px;padding-right:20px}}
+    @media (max-width:560px){.project-row{min-height:76px;padding:18px 0}.project-title{font-size:25px}.hero{padding-top:52px;padding-bottom:60px}.nav{gap:15px;padding:10px 14px}.contact-big{font-size:28px}.panel{width:100vw}.panel-head{padding:14px 18px}.body{padding:20px 18px 50px}.fact-band{grid-template-columns:1fr}.fact-band .fact{border-right:0}.bar-row{grid-template-columns:1fr;gap:5px}.bar-val{margin-top:-3px}.kv-row{grid-template-columns:1fr;gap:4px}}
+  </style>
 </head>
 <body>
-<x-dc>
-<template id="__bundler_thumbnail">
-<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#0F3D6B"/><text x="50" y="50" text-anchor="middle" dominant-baseline="central" font-family="Archivo, sans-serif" font-weight="700" font-size="30" fill="#FFFFFF">ŠV</text><rect x="30" y="66" width="40" height="2" fill="#FFFFFF"/></svg>
-</template>
-<helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<script src="./image-slot.js"></script>
-<style>
-  html, body { margin: 0; padding: 0; background: #0F3D6B; }
-  * { box-sizing: border-box; }
-  a { color: #1F4E8C; text-decoration: none; }
-  a:hover { color: #15181B; }
-  ::selection { background: rgba(255,255,255,0.25); }
-  @keyframes panelIn { from { transform: translateX(46px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-  @keyframes scrimIn { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes fadeUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-</style>
-</helmet>
+  <main>
+    <header class="top wrap">
+      <div class="brand">Šimon Viater</div>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#models" class="active">Models</a><a href="#about">About</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
+      </nav>
+      <a class="pill-btn" href="./assets/Simon-Viater-CV.pdf" download="Simon-Viater-CV.pdf">Download CV</a>
+    </header>
 
-<div style="min-height: 100vh; background: #0F3D6B; color: #FFFFFF; font-family: 'Archivo', system-ui, sans-serif;">
+    <section id="models" class="hero wrap">
+      <h1>Portfolio Projects</h1>
+      <p class="intro">Four case studies in real estate and project finance, each one built from the lease, the invoice or the assumption sheet up.</p>
+      <div class="project-head"><span></span><span>Project</span><span>Tool</span><span>Year</span></div>
+      <div class="project-row" data-project="rentroll"><span class="num">01</span><h2 class="project-title">Rent roll analysis</h2><span class="tag">Excel</span><span class="year">2026</span></div>
+      <div class="project-row" data-project="financing"><span class="num">02</span><h2 class="project-title">Project financing</h2><span class="tag">Excel</span><span class="year">2026</span></div>
+      <div class="project-row" data-project="variance"><span class="num">03</span><h2 class="project-title">Actual vs budget spend</h2><span class="tag">Power BI</span><span class="year">2026</span></div>
+      <div class="project-row dim" data-project="market"><span class="num">04</span><h2 class="project-title">Market analysis</h2><span class="tag">Planned</span><span class="year">next</span></div>
+    </section>
 
-  <div style="max-width: 1120px; margin: 0 auto; padding: 26px 32px 0; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
-    <span style="font-size: 19px; font-weight: 600; letter-spacing: -0.01em;">Šimon Viater</span>
-    <nav style="display: flex; gap: 22px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.35); border-radius: 999px; padding: 11px 22px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;">
-      <a href="#models" style="color: #FFFFFF; border-bottom: 1px dotted #FFFFFF;" style-hover="color: #FFFFFF;">Models</a>
-      <a href="#about" style="color: rgba(255,255,255,0.62);" style-hover="color: #FFFFFF;">About</a>
-      <a href="#skills" style="color: rgba(255,255,255,0.62);" style-hover="color: #FFFFFF;">Skills</a>
-      <a href="#contact" style="color: rgba(255,255,255,0.62);" style-hover="color: #FFFFFF;">Contact</a>
-    </nav>
-    <a href="./assets/Simon-Viater-CV.pdf" download="Simon-Viater-CV.pdf" style="background: #FFFFFF; color: #0F3D6B; border-radius: 999px; padding: 11px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;" style-hover="background: rgba(255,255,255,0.85); color: #0F3D6B;">Download CV</a>
-  </div>
+    <section id="about" class="section"><div class="section-inner wrap"><p class="label">About</p><div><p class="copy">MSc Financial Economics at Erasmus University Rotterdam, after a BSc in Economics &amp; Business Administration at Aarhus University and an exchange at HKUST. I am an energetic fast-learner and an outside-the-box thinker. For a year I was a financial assistant at IMMOCAP, one of Slovakia&rsquo;s largest real estate developers: reporting on the firm&rsquo;s debt structure to shareholders, comparing bank term sheets for project financing, maintaining rent rolls for valuation and automating pricing templates. The models here are my own case studies, built to keep those muscles working.</p><p class="copy">When I&rsquo;m not diving into financial data, you&rsquo;ll find me rock climbing, surfing, traveling, or jamming on my ukulele.</p></div></div></section>
+    <section id="skills" class="section"><div class="section-inner wrap"><p class="label">Skills &amp; tools</p><div class="skills"><div class="skill"><span class="skill-k">Modelling</span><span class="skill-v">Excel financial modelling · lease-level rent rolls · WALT / WALB · cash-flow builds · DSCR debt sizing · IRR / NPV · sensitivity &amp; scenario analysis</span></div><div class="skill"><span class="skill-k">Analytics</span><span class="skill-v">Power BI · DAX · Power Query · star-schema data models · R</span></div><div class="skill"><span class="skill-k">Domain</span><span class="skill-v">Real estate · banking · energy sector</span></div><div class="skill"><span class="skill-k">Other</span><span class="skill-v">English and Slovak · Duke of Edinburgh&rsquo;s Award, Silver medal · case competitions (top 10, Aarhus Case Competition) · team leadership</span></div></div></div></section>
+    <section id="contact" class="section"><div class="section-inner wrap"><p class="label">Contact</p><div><p class="contact-big">Happy to walk through any of these models line by line.</p><div class="contact-links"><a class="pill-btn" href="mailto:simon.viater@gmail.com">simon.viater@gmail.com</a><a class="outline" href="https://simon-viater.github.io/Rotterdam-Science-Tower/" target="_blank" rel="noopener">Rotterdam Science Tower ↗</a><a class="outline" href="./assets/Simon-Viater-CV.pdf" download="Simon-Viater-CV.pdf">Download CV ↓</a></div><p class="meta">Rotterdam, Netherlands · +421 901 703 384</p></div></div></section>
+  </main>
+  <footer><div class="wrap"><span>Šimon Viater · financial modelling portfolio</span><span>All figures come from self-built case studies, not client data.</span></div></footer>
 
-  <section id="models" style="max-width: 1120px; margin: 0 auto; padding: 0 32px 90px;">
-    <h1 style="font-size: clamp(46px, 7.4vw, 96px); line-height: 0.94; letter-spacing: -0.03em; font-weight: 700; margin: 74px 0 14px; max-width: 19ch;">Portfolio Projects</h1>
-    <p style="margin: 0 0 46px; font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.78); max-width: 54ch; text-wrap: pretty;">Four case studies in real estate and project finance, each one built from the lease, the invoice or the assumption sheet up.</p>
+  <div id="overlay" class="overlay"></div>
+  <aside id="panel" class="panel" aria-hidden="true"><div class="panel-head"><span id="crumb" class="crumb"></span><button id="close" class="close" type="button">Close ×</button></div><div id="panelContent"></div></aside>
 
-    <div style="display: grid; grid-template-columns: 44px minmax(0, 1fr) 150px 90px; gap: 18px; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.55); padding-bottom: 12px; border-bottom: 2px solid #FFFFFF;">
-      <span></span><span>Project</span><span>Tool</span><span>Year</span>
-    </div>
-
-    <div onMouseEnter="{{ hoverRentRoll }}" onMouseLeave="{{ hoverOut }}" onClick="{{ openRentRoll }}" style="{{ skin1.row }}">
-      <span style="{{ skin1.num }}">01</span>
-      <h2 style="{{ skin1.title }}">Rent roll analysis</h2>
-      <span style="{{ skin1.pill }}">Excel</span>
-      <span style="{{ skin1.year }}">2026</span>
-    </div>
-
-    <div onMouseEnter="{{ hoverFinancing }}" onMouseLeave="{{ hoverOut }}" onClick="{{ openFinancing }}" style="{{ skin2.row }}">
-      <span style="{{ skin2.num }}">02</span>
-      <h2 style="{{ skin2.title }}">Project financing</h2>
-      <span style="{{ skin2.pill }}">Excel</span>
-      <span style="{{ skin2.year }}">2026</span>
-    </div>
-
-    <div onMouseEnter="{{ hoverVariance }}" onMouseLeave="{{ hoverOut }}" onClick="{{ openVariance }}" style="{{ skin3.row }}">
-      <span style="{{ skin3.num }}">03</span>
-      <h2 style="{{ skin3.title }}">Actual vs budget spend</h2>
-      <span style="{{ skin3.pill }}">Power BI</span>
-      <span style="{{ skin3.year }}">2026</span>
-    </div>
-
-    <div onMouseEnter="{{ hoverMarket }}" onMouseLeave="{{ hoverOut }}" onClick="{{ openMarket }}" style="{{ skin4.row }}">
-      <span style="{{ skin4.num }}">04</span>
-      <h2 style="{{ skin4.title }}">Market analysis</h2>
-      <span style="{{ skin4.pill }}">Planned</span>
-      <span style="{{ skin4.year }}">next</span>
-    </div>
-  </section>
-
-  <section id="about" style="border-top: 2px solid rgba(255,255,255,0.35);">
-    <div style="max-width: 1120px; margin: 0 auto; padding: 60px 32px; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px;">
-      <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6);">About</p>
-      <div>
-        <p style="margin: 0; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.78); max-width: 66ch; text-wrap: pretty;">MSc Financial Economics at Erasmus University Rotterdam, after a BSc in Economics &amp; Business Administration at Aarhus University and an exchange at HKUST. I am an energetic fast-learner and an outside-the-box thinker. For a year I was a financial assistant at IMMOCAP, one of Slovakia&rsquo;s largest real estate developers: reporting on the firm&rsquo;s debt structure to shareholders, comparing bank term sheets for project financing, maintaining rent rolls for valuation and automating pricing templates. The models here are my own case studies, built to keep those muscles working.</p>
-        <p style="margin: 20px 0 0; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.78); max-width: 66ch; text-wrap: pretty;">When I&rsquo;m not diving into financial data, you&rsquo;ll find me rock climbing, surfing, traveling, or jamming on my ukulele.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="skills" style="border-top: 2px solid rgba(255,255,255,0.35);">
-    <div style="max-width: 1120px; margin: 0 auto; padding: 60px 32px; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px;">
-      <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6);">Skills &amp; tools</p>
-      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px 40px;">
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.55);">Modelling</span>
-          <span style="font-size: 14.5px; line-height: 1.7; color: rgba(255,255,255,0.86);">Excel financial modelling &middot; lease-level rent rolls &middot; WALT / WALB &middot; cash-flow builds &middot; DSCR debt sizing &middot; IRR / NPV &middot; sensitivity &amp; scenario analysis</span>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.55);">Analytics</span>
-          <span style="font-size: 14.5px; line-height: 1.7; color: rgba(255,255,255,0.86);">Power BI &middot; DAX &middot; Power Query &middot; star-schema data models &middot; R</span>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.55);">Domain</span>
-          <span style="font-size: 14.5px; line-height: 1.7; color: rgba(255,255,255,0.86);">Real estate &middot; banking &middot; energy sector</span>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.55);">Other</span>
-          <span style="font-size: 14.5px; line-height: 1.7; color: rgba(255,255,255,0.86);">English and Slovak &middot; Duke of Edinburgh&rsquo;s Award, Silver medal &middot; case competitions (top 10, Aarhus Case Competition) &middot; team leadership</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" style="border-top: 2px solid rgba(255,255,255,0.35);">
-    <div style="max-width: 1120px; margin: 0 auto; padding: 60px 32px 80px; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px;">
-      <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6);">Contact</p>
-      <div>
-        <p style="margin: 0 0 26px; font-size: 32px; line-height: 1.2; font-weight: 600; letter-spacing: -0.01em; max-width: 30ch;">Happy to walk through any of these models line by line.</p>
-        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
-          <a href="mailto:simon.viater@gmail.com" style="background: #FFFFFF; color: #0F3D6B; border-radius: 999px; padding: 12px 22px; font-family: 'IBM Plex Mono', monospace; font-size: 12px;" style-hover="background: rgba(255,255,255,0.85); color: #0F3D6B;">simon.viater@gmail.com</a>
-          <a href="https://simon-viater.github.io/Rotterdam-Science-Tower/" target="_blank" rel="noopener" style="border: 1px solid rgba(255,255,255,0.5); color: #FFFFFF; border-radius: 999px; padding: 12px 22px; font-family: 'IBM Plex Mono', monospace; font-size: 12px;" style-hover="border-color: #FFFFFF; color: #FFFFFF; background: rgba(255,255,255,0.12);">Rotterdam Science Tower &nearr;</a>
-          <a href="./assets/Simon-Viater-CV.pdf" download="Simon-Viater-CV.pdf" style="border: 1px solid rgba(255,255,255,0.5); color: #FFFFFF; border-radius: 999px; padding: 12px 22px; font-family: 'IBM Plex Mono', monospace; font-size: 12px;" style-hover="border-color: #FFFFFF; color: #FFFFFF; background: rgba(255,255,255,0.12);">Download CV &darr;</a>
-        </div>
-        <p style="margin: 24px 0 0; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: rgba(255,255,255,0.6);">Rotterdam, Netherlands &middot; +421 901 703 384</p>
-      </div>
-    </div>
-  </section>
-
-  <sc-if value="{{ previewVisible }}">
-    <div style="position: fixed; left: {{ previewX }}px; top: {{ previewY }}px; width: 330px; background: #FFFFFF; padding: 9px; box-shadow: 0 26px 50px -24px rgba(0,0,0,0.6); transform: rotate(-3deg); pointer-events: none; z-index: 30;">
-      <sc-if value="{{ previewIsImage }}">
-        <img src="./assets/rent-roll-dashboard.png" alt="Rent roll dashboard preview" style="display: block; width: 100%; height: 212px; object-fit: cover; object-position: top;" />
-      </sc-if>
-      <sc-if value="{{ previewIsLabel }}">
-        <div style="width: 100%; height: 212px; background: #DDE3EA; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: #7B8590;">{{ previewLabel }}</div>
-      </sc-if>
-    </div>
-  </sc-if>
-
-  <sc-if value="{{ panelOpen }}">
-    <div>
-      <div onClick="{{ close }}" style="position: fixed; inset: 0; background: rgba(8,26,46,0.45); z-index: 40; animation: scrimIn 300ms ease-out both;"></div>
-      <aside ref="{{ asideRef }}" style="{{ asideStyle }}">
-
-        <div style="{{ panelHeadStyle }}">
-          <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">{{ panelCrumb }}</span>
-          <button type="button" onClick="{{ close }}" style="font-family: 'Times New Roman', Times, serif; font-size: 12.5px; letter-spacing: 0.06em; background: transparent; border: 1px solid #C4C7C0; color: #5A6169; padding: 6px 13px; cursor: pointer; transition: all 140ms;" style-hover="border-color: #15181B; color: #15181B;">Close &times;</button>
-        </div>
-
-        <sc-if value="{{ factsSticky }}">
-          <div style="{{ railStyle }}">
-            <span style="font-size: 12.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">Key figures</span>
-            <sc-for list="{{ facts }}" as="f" hint-placeholder-count="5">
-              <div style="padding: 20px 0; border-top: 1px solid #DDDFDA;">
-                <span style="display: block; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #8B9198;">{{ f.label }}</span>
-                <b style="display: block; font-size: 36px; font-weight: 600; letter-spacing: -0.01em; margin-top: 8px; line-height: 1;">{{ f.value }}</b>
-                <span style="display: block; font-size: 13.5px; color: #5A6169; margin-top: 8px; line-height: 1.5;">{{ f.note }}</span>
-              </div>
-            </sc-for>
-          </div>
-        </sc-if>
-
-        <div style="{{ panelBodyStyle }}">
-
-          <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">{{ kicker }}</span>
-          <h1 style="font-size: clamp(28px, 3.2vw, 40px); font-weight: 600; line-height: 1.05; letter-spacing: -0.005em; margin: 10px 0 0;">{{ title }}</h1>
-          <p style="margin: 10px 0 0; font-size: 13.5px; color: #5A6169;">{{ standfirst }}</p>
-
-          <sc-if value="{{ factsBand }}">
-            <div style="display: grid; grid-template-columns: repeat({{ factsCount }}, minmax(0, 1fr)); border-top: 1px solid #15181B; border-bottom: 1px solid #DDDFDA; margin-top: 24px;">
-              <sc-for list="{{ facts }}" as="f" hint-placeholder-count="5">
-                <div style="padding: 18px 16px 20px 0; border-right: 1px solid #DDDFDA;">
-                  <span style="display: block; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: #8B9198;">{{ f.label }}</span>
-                  <span style="display: block; font-size: 27px; font-weight: 600; margin-top: 8px; line-height: 1;">{{ f.value }}</span>
-                </div>
-              </sc-for>
-            </div>
-          </sc-if>
-
-          <div style="margin-top: 30px; padding-bottom: 24px; border-bottom: 1px solid #DDDFDA;">
-            <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">What it is</span>
-            <h2 style="font-size: 19px; font-weight: 600; margin: 8px 0 10px;">{{ whatHead }}</h2>
-            <p style="margin: 0; font-size: 15.5px; line-height: 1.6; max-width: 66ch; text-wrap: pretty;">{{ whatBody }}</p>
-          </div>
-
-          <div style="margin-top: 26px; padding-bottom: 24px; border-bottom: 1px solid #DDDFDA;">
-            <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">Problem it solves</span>
-            <h2 style="font-size: 19px; font-weight: 600; margin: 8px 0 10px;">{{ problemHead }}</h2>
-            <p style="margin: 0; font-size: 15.5px; line-height: 1.6; max-width: 66ch; text-wrap: pretty;">{{ problemBody }}</p>
-          </div>
-
-          <sc-if value="{{ isRentRoll }}">
-            <div style="margin-top: 30px;">
-              <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">Output</span>
-              <h2 style="font-size: 19px; font-weight: 600; margin: 8px 0 6px;">The rent roll, read four ways</h2>
-              <p style="margin: 0 0 22px; font-size: 13.5px; color: #5A6169; max-width: 64ch;">Live from the same lease table. Hover a floor to trace it into the schedule below.</p>
-
-              <div style="{{ dashGrid }}">
-                <div style="{{ elevCol }}">
-                  <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">Elevation: use and occupancy</span>
-                  <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 3px;">
-                    <sc-for list="{{ floors }}" as="f" hint-placeholder-count="22">
-                      <div onMouseEnter="{{ f.enter }}" onMouseLeave="{{ litOut }}" style="display: flex; align-items: stretch; gap: 10px; cursor: default;">
-                        <div style="font-size: 11.5px; color: #8B9198; width: 24px; flex: none; display: flex; align-items: center; justify-content: flex-end;">{{ f.label }}</div>
-                        <div style="display: flex; gap: 3px; flex: 1;">
-                          <div style="{{ f.bar }}">{{ f.barText }}</div>
-                        </div>
-                      </div>
-                    </sc-for>
-                  </div>
-                  <div style="border-top: 1.5px solid #15181B; margin: 8px 0 4px 34px;"></div>
-                  <div style="display: flex; flex-direction: column; gap: 3px; opacity: 0.55;">
-                    <div style="display: flex; align-items: stretch; gap: 10px;">
-                      <div style="font-size: 11.5px; color: #8B9198; width: 24px; flex: none; display: flex; align-items: center; justify-content: flex-end;">B1</div>
-                      <div style="flex: 1; height: 23px; background: #1F4E8C; color: #FFFFFF; font-size: 11px; display: flex; align-items: center; justify-content: center;">Parking, 269 let</div>
-                    </div>
-                    <div style="display: flex; align-items: stretch; gap: 10px;">
-                      <div style="font-size: 11.5px; color: #8B9198; width: 24px; flex: none; display: flex; align-items: center; justify-content: flex-end;">B2</div>
-                      <div style="flex: 1; height: 23px; box-shadow: inset 0 0 0 1px #C4C7C0; color: #5A6169; font-size: 11px; display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(45deg, transparent, transparent 3px, #DDDFDA 3px, #DDDFDA 4px);">Parking, 353 vacant</div>
-                    </div>
-                  </div>
-                  <div style="display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 18px;">
-                    <span style="font-size: 12px; color: #5A6169; display: flex; align-items: center; gap: 6px;"><i style="width: 12px; height: 12px; flex: none; background: #17685A;"></i>Lab</span>
-                    <span style="font-size: 12px; color: #5A6169; display: flex; align-items: center; gap: 6px;"><i style="width: 12px; height: 12px; flex: none; background: #1F4E8C;"></i>Office</span>
-                    <span style="font-size: 12px; color: #5A6169; display: flex; align-items: center; gap: 6px;"><i style="width: 12px; height: 12px; flex: none; background: #9C6A0B;"></i>Retail</span>
-                    <span style="font-size: 12px; color: #5A6169; display: flex; align-items: center; gap: 6px;"><i style="width: 12px; height: 12px; flex: none; box-shadow: inset 0 0 0 1px #C4C7C0; background: repeating-linear-gradient(45deg, transparent, transparent 3px, #DDDFDA 3px, #DDDFDA 4px);"></i>Vacant</span>
-                    <span style="font-size: 12px; color: #5A6169; display: flex; align-items: center; gap: 6px;"><i style="width: 7px; height: 7px; flex: none; background: #A33227; border-radius: 50%;"></i>Break option</span>
-                  </div>
-                </div>
-
-                <div style="{{ chartsCol }}">
-                  <div>
-                    <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">Covenant</span>
-                    <h3 style="font-size: 15.5px; font-weight: 600; margin: 7px 0 0;">Share of contracted rent by tenant</h3>
-                    <div style="display: flex; flex-direction: column; gap: 9px; margin-top: 14px;">
-                      <sc-for list="{{ covBars }}" as="b" hint-placeholder-count="7">
-                        <div style="{{ barCov }}">
-                          <div style="{{ barLabelStyle }}">{{ b.name }}</div>
-                          <div style="{{ trackStyle }}">
-                            <div style="{{ b.fill }}"></div>
-                          </div>
-                          <div style="{{ barValStyle }}">{{ b.val }}</div>
-                        </div>
-                      </sc-for>
-                    </div>
-                    <p style="margin: 12px 0 0; font-size: 13.5px; color: #5A6169; line-height: 1.55; max-width: 64ch;">{{ covNote }}</p>
-                  </div>
-
-                  <div>
-                    <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">Expiry</span>
-                    <h3 style="font-size: 15.5px; font-weight: 600; margin: 7px 0 0;">Contracted rent falling due by year</h3>
-                    <div style="display: flex; flex-direction: column; gap: 9px; margin-top: 14px;">
-                      <sc-for list="{{ expBars }}" as="b" hint-placeholder-count="6">
-                        <div style="{{ barExp }}">
-                          <div style="{{ barLabelStyle }}">{{ b.name }}</div>
-                          <div style="{{ trackStyle }}">
-                            <div style="{{ b.fill }}"></div>
-                          </div>
-                          <div style="{{ barValStyle }}">{{ b.val }}</div>
-                        </div>
-                      </sc-for>
-                    </div>
-                    <p style="margin: 12px 0 0; font-size: 13.5px; color: #5A6169; line-height: 1.55; max-width: 64ch;">{{ expNote }}</p>
-                  </div>
-
-                  <div>
-                    <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">Upside</span>
-                    <h3 style="font-size: 15.5px; font-weight: 600; margin: 7px 0 0;">Contracted income against fully let potential</h3>
-                    <div style="display: flex; flex-direction: column; gap: 9px; margin-top: 14px;">
-                      <sc-for list="{{ revBars }}" as="b" hint-placeholder-count="5">
-                        <div style="{{ barRev }}">
-                          <div style="{{ barLabelStyle }}">{{ b.name }}</div>
-                          <div style="{{ trackStyle }}">
-                            <div style="{{ b.fill }}"></div>
-                          </div>
-                          <div style="{{ barValStyle }}">{{ b.val }}</div>
-                        </div>
-                      </sc-for>
-                    </div>
-                    <p style="margin: 12px 0 0; font-size: 13.5px; color: #5A6169; line-height: 1.55; max-width: 64ch;">{{ revNote }}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div style="margin-top: 34px;">
-                <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">Detail</span>
-                <h3 style="font-size: 19px; font-weight: 600; margin: 8px 0 0;">Unit schedule</h3>
-                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 18px 0 0;">
-                  <button type="button" onClick="{{ filterAll }}" style="{{ chipAll }}">All floors</button>
-                  <button type="button" onClick="{{ filterLet }}" style="{{ chipLet }}">Let</button>
-                  <button type="button" onClick="{{ filterVacant }}" style="{{ chipVacant }}">Vacant</button>
-                  <button type="button" onClick="{{ filterLab }}" style="{{ chipLab }}">Lab</button>
-                  <button type="button" onClick="{{ filterOffice }}" style="{{ chipOffice }}">Office</button>
-                  <button type="button" onClick="{{ filterRetail }}" style="{{ chipRetail }}">Retail</button>
-                  <span style="margin-left: auto; font-size: 12.5px; color: #8B9198;">{{ rowCount }}</span>
-                </div>
-
-                <div style="overflow-x: auto; margin-top: 16px;">
-                  <table style="width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; min-width: 720px;">
-                    <thead>
-                      <tr>
-                        <th style="font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase; color: #8B9198; font-weight: 400; text-align: left; padding: 0 12px 10px 0; border-bottom: 1px solid #15181B; white-space: nowrap;">Floor</th>
-                        <th style="font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase; color: #8B9198; font-weight: 400; text-align: left; padding: 0 12px 10px 0; border-bottom: 1px solid #15181B; white-space: nowrap;">Use</th>
-                        <th style="font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase; color: #8B9198; font-weight: 400; text-align: left; padding: 0 12px 10px 0; border-bottom: 1px solid #15181B; white-space: nowrap;">Tenant</th>
-                        <th style="font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase; color: #8B9198; font-weight: 400; text-align: right; padding: 0 12px 10px 0; border-bottom: 1px solid #15181B; white-space: nowrap;">NLA m&sup2;</th>
-                        <th style="font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase; color: #8B9198; font-weight: 400; text-align: right; padding: 0 12px 10px 0; border-bottom: 1px solid #15181B; white-space: nowrap;">&euro;/m&sup2;</th>
-                        <th style="font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase; color: #8B9198; font-weight: 400; text-align: right; padding: 0 12px 10px 0; border-bottom: 1px solid #15181B; white-space: nowrap;">Contracted rent p.a.</th>
-                        <th style="font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase; color: #8B9198; font-weight: 400; text-align: right; padding: 0 12px 10px 0; border-bottom: 1px solid #15181B; white-space: nowrap;">Share</th>
-                        <th style="font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase; color: #8B9198; font-weight: 400; text-align: right; padding: 0 12px 10px 0; border-bottom: 1px solid #15181B; white-space: nowrap;">Expiry</th>
-                        <th style="font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase; color: #8B9198; font-weight: 400; text-align: right; padding: 0 12px 10px 0; border-bottom: 1px solid #15181B; white-space: nowrap;">Break</th>
-                        <th style="font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase; color: #8B9198; font-weight: 400; text-align: right; padding: 0 12px 10px 0; border-bottom: 1px solid #15181B; white-space: nowrap;">Term left</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <sc-for list="{{ rows }}" as="r" hint-placeholder-count="12">
-                        <tr onMouseEnter="{{ r.enter }}" onMouseLeave="{{ litOut }}" style="{{ r.rowStyle }}">
-                          <td style="padding: 11px 12px 11px 0; border-bottom: 1px solid #DDDFDA; font-size: 13px; color: #5A6169;">{{ r.label }}</td>
-                          <td style="padding: 11px 12px 11px 0; border-bottom: 1px solid #DDDFDA; font-size: 14px;"><span style="{{ r.pill }}">{{ r.use }}</span></td>
-                          <td style="{{ r.tenantStyle }}">{{ r.tenant }}</td>
-                          <td style="padding: 11px 12px 11px 0; border-bottom: 1px solid #DDDFDA; font-size: 13.5px; text-align: right;">{{ r.nla }}</td>
-                          <td style="padding: 11px 12px 11px 0; border-bottom: 1px solid #DDDFDA; font-size: 13.5px; text-align: right;">{{ r.psm }}</td>
-                          <td style="{{ r.rentStyle }}">{{ r.rent }}</td>
-                          <td style="padding: 11px 12px 11px 0; border-bottom: 1px solid #DDDFDA; font-size: 13.5px; text-align: right; color: #5A6169;">{{ r.share }}</td>
-                          <td style="padding: 11px 12px 11px 0; border-bottom: 1px solid #DDDFDA; font-size: 13.5px; text-align: right;">{{ r.expiry }}</td>
-                          <td style="{{ r.breakStyle }}">{{ r.brk }}</td>
-                          <td style="padding: 11px 12px 11px 0; border-bottom: 1px solid #DDDFDA; font-size: 13.5px; text-align: right;">{{ r.left }}</td>
-                        </tr>
-                      </sc-for>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <td colspan="3" style="border-top: 1.5px solid #15181B; padding-top: 13px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #8B9198;">Total</td>
-                        <td style="border-top: 1.5px solid #15181B; padding-top: 13px; font-size: 13.5px; font-weight: 500; text-align: right;">{{ totalNla }}</td>
-                        <td style="border-top: 1.5px solid #15181B; padding-top: 13px; font-size: 13.5px; font-weight: 500; text-align: right;">{{ totalPsm }}</td>
-                        <td style="border-top: 1.5px solid #15181B; padding-top: 13px; font-size: 13.5px; font-weight: 500; text-align: right;">{{ totalRent }}</td>
-                        <td style="border-top: 1.5px solid #15181B; padding-top: 13px; font-size: 13.5px; font-weight: 500; text-align: right;">{{ totalShare }}</td>
-                        <td colspan="3" style="border-top: 1.5px solid #15181B;"></td>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-                <p style="margin: 18px 0 0; font-size: 12px; color: #8B9198; line-height: 1.8; border-top: 1px solid #DDDFDA; padding-top: 16px;">Rents are headline, net of service charge. WALT and WALB are weighted by contracted rent from 14 Aug 2026; WALB assumes every break is exercised. Parking and storage are priced at asking terms.</p>
-              </div>
-            </div>
-          </sc-if>
-
-          <sc-if value="{{ isFinancing }}">
-            <div style="margin-top: 30px;">
-              <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">Output</span>
-              <h2 style="font-size: 19px; font-weight: 600; margin: 8px 0 6px;">The model, section by section</h2>
-              <p style="margin: 0 0 22px; font-size: 13.5px; color: #5A6169; max-width: 64ch;">Figures below are taken straight from the workbook: the Input, Calculation and Presentation sheets.</p>
-
-              <div style="border-top: 1px solid #15181B; padding-top: 22px;">
-                <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">The workbook</span>
-                <h3 style="font-size: 15.5px; font-weight: 600; margin: 7px 0 14px;">Presentation sheet, fully linked to the inputs</h3>
-                <div style="overflow-x: auto; border: 1px solid #C4C7C0; background: #FFFFFF;">
-                  <a href="./assets/financing-presentation-sheet.jpg" target="_blank" rel="noopener" style="display: block; border-bottom: none;">
-                    <img src="./assets/financing-presentation-sheet.jpg" alt="Presentation sheet of the wind and solar project finance model showing project overview and headline results" style="display: block; width: 1006px; min-width: 1006px; max-width: none;" />
-                  </a>
-                </div>
-                <p style="margin: 8px 0 0; font-size: 12px; color: #8B9198;">Fig. 1: project overview and headline results, all driven off the Input sheet. Scroll sideways, or <a href="./assets/financing-presentation-sheet.jpg" target="_blank" rel="noopener">open it full size</a>.</p>
-              </div>
-
-              <div style="margin-top: 30px; border-top: 1px solid #15181B; padding-top: 22px;">
-                <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">1. The asset</span>
-                <h3 style="font-size: 15.5px; font-weight: 600; margin: 7px 0 14px;">What is being financed</h3>
-                <div style="display: flex; flex-direction: column;">
-                  <sc-for list="{{ assetRows }}" as="a" hint-placeholder-count="8">
-                    <div style="display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr) minmax(0, 1.6fr); gap: 14px; padding: 10px 0; border-bottom: 1px solid #DDDFDA; align-items: baseline;">
-                      <span style="font-size: 13.5px; color: #5A6169;">{{ a.label }}</span>
-                      <span style="font-size: 15px; font-weight: 500;">{{ a.value }}</span>
-                      <span style="font-size: 12.5px; color: #8B9198;">{{ a.note }}</span>
-                    </div>
-                  </sc-for>
-                </div>
-              </div>
-
-              <div style="margin-top: 30px; border-top: 1px solid #15181B; padding-top: 22px;">
-                <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">2. Capital expenditure</span>
-                <h3 style="font-size: 15.5px; font-weight: 600; margin: 7px 0 14px;">&euro;1.99bn built up per MW, by cost item</h3>
-                <div style="display: flex; flex-direction: column; gap: 9px;">
-                  <sc-for list="{{ capexBars }}" as="b" hint-placeholder-count="6">
-                    <div style="{{ barCapex }}">
-                      <div style="{{ barLabelStyle }}">{{ b.name }}</div>
-                      <div style="{{ trackStyle }}">
-                        <div style="{{ b.fill }}"></div>
-                      </div>
-                      <div style="{{ barValStyle }}">{{ b.val }}</div>
-                    </div>
-                  </sc-for>
-                </div>
-                <p style="margin: 12px 0 0; font-size: 13.5px; color: #5A6169; line-height: 1.55; max-width: 64ch;">Turbine supply and installation is 68% of direct capex at &euro;880k/MW. Spend is drawn down on a 17-month S-curve, so the model never assumes a flat build.</p>
-              </div>
-
-              <div style="margin-top: 30px; border-top: 1px solid #15181B; padding-top: 22px;">
-                <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">3. Senior debt</span>
-                <h3 style="font-size: 15.5px; font-weight: 600; margin: 7px 0 14px;">Sized backwards from the covenant, not from a target ticket</h3>
-                <div style="display: flex; flex-direction: column;">
-                  <sc-for list="{{ debtTerms }}" as="d" hint-placeholder-count="7">
-                    <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr) minmax(0, 1.7fr); gap: 14px; padding: 10px 0; border-bottom: 1px solid #DDDFDA; align-items: baseline;">
-                      <span style="font-size: 13.5px; color: #5A6169;">{{ d.label }}</span>
-                      <span style="font-size: 15px; font-weight: 500;">{{ d.value }}</span>
-                      <span style="font-size: 12.5px; color: #8B9198;">{{ d.note }}</span>
-                    </div>
-                  </sc-for>
-                </div>
-              </div>
-
-              <div style="margin-top: 30px;">
-                <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">4. Sources &amp; uses of funds</span>
-                <h3 style="font-size: 15.5px; font-weight: 600; margin: 7px 0 0;">&euro;3.37bn in, &euro;3.37bn out</h3>
-                <div style="{{ suGrid }}">
-                  <div style="{{ suColA }}">
-                    <span style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8B9198;">Sources</span>
-                    <div style="margin-top: 10px;">
-                      <sc-for list="{{ sources }}" as="s" hint-placeholder-count="5">
-                        <div style="display: grid; grid-template-columns: minmax(0, 1fr) 84px 56px; gap: 10px; padding: 9px 0; border-bottom: 1px solid #DDDFDA; align-items: baseline;">
-                          <span style="font-size: 13.5px; color: #5A6169;">{{ s.name }}</span>
-                          <span style="font-size: 14px; text-align: right; font-weight: 500;">{{ s.val }}</span>
-                          <span style="font-size: 12px; text-align: right; color: #8B9198;">{{ s.pct }}</span>
-                        </div>
-                      </sc-for>
-                      <div style="display: grid; grid-template-columns: minmax(0, 1fr) 84px 56px; gap: 10px; padding-top: 11px; border-top: 1.5px solid #15181B; align-items: baseline;">
-                        <span style="font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #8B9198;">Total</span>
-                        <span style="font-size: 15px; text-align: right; font-weight: 600;">{{ totalSources }}</span>
-                        <span></span>
-                      </div>
-                    </div>
-                  </div>
-                  <div style="{{ suColB }}">
-                    <span style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8B9198;">Uses</span>
-                    <div style="margin-top: 10px;">
-                      <sc-for list="{{ uses }}" as="u" hint-placeholder-count="7">
-                        <div style="display: grid; grid-template-columns: minmax(0, 1fr) 84px 56px; gap: 10px; padding: 9px 0; border-bottom: 1px solid #DDDFDA; align-items: baseline;">
-                          <span style="font-size: 13.5px; color: #5A6169;">{{ u.name }}</span>
-                          <span style="font-size: 14px; text-align: right; font-weight: 500;">{{ u.val }}</span>
-                          <span style="font-size: 12px; text-align: right; color: #8B9198;">{{ u.pct }}</span>
-                        </div>
-                      </sc-for>
-                      <div style="display: grid; grid-template-columns: minmax(0, 1fr) 84px 56px; gap: 10px; padding-top: 11px; border-top: 1.5px solid #15181B; align-items: baseline;">
-                        <span style="font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #8B9198;">Total</span>
-                        <span style="font-size: 15px; text-align: right; font-weight: 600;">{{ totalUses }}</span>
-                        <span></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <p style="margin: 14px 0 0; font-size: 12.5px; color: #17685A;">{{ suBalanced }}</p>
-              </div>
-
-              <div style="margin-top: 30px;">
-                <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">5. Revenue drivers</span>
-                <h3 style="font-size: 15.5px; font-weight: 600; margin: 7px 0 0;">When the power arrives, and what it sells for</h3>
-                <div style="{{ finTwo }}">
-                  <div style="{{ suColA }}">
-                    <span style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8B9198;">Monthly generation shape</span>
-                    <div style="display: flex; flex-direction: column; gap: 7px; margin-top: 12px;">
-                      <sc-for list="{{ shapeBars }}" as="b" hint-placeholder-count="12">
-                        <div style="{{ barShape }}">
-                          <div style="{{ barLabelStyle }}">{{ b.name }}</div>
-                          <div style="{{ trackStyle }}">
-                            <div style="{{ b.fill }}"></div>
-                          </div>
-                          <div style="{{ barValStyle }}">{{ b.val }}</div>
-                        </div>
-                      </sc-for>
-                    </div>
-                    <p style="margin: 12px 0 0; font-size: 12.5px; color: #8B9198; line-height: 1.5;">Winter-weighted: 42% of annual output lands in Nov&ndash;Feb, which is what shapes the DSCR profile.</p>
-                  </div>
-                  <div style="{{ suColB }}">
-                    <span style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8B9198;">Merchant baseload curve</span>
-                    <div style="display: flex; flex-direction: column; gap: 7px; margin-top: 12px;">
-                      <sc-for list="{{ priceBars }}" as="b" hint-placeholder-count="10">
-                        <div style="{{ barPrice }}">
-                          <div style="{{ barLabelStyle }}">{{ b.name }}</div>
-                          <div style="{{ trackStyle }}">
-                            <div style="{{ b.fill }}"></div>
-                          </div>
-                          <div style="{{ barValStyle }}">{{ b.val }}</div>
-                        </div>
-                      </sc-for>
-                    </div>
-                    <p style="margin: 12px 0 0; font-size: 12.5px; color: #8B9198; line-height: 1.5;">Real prices at base date, dipping to &euro;62 in the early 2020s then recovering. 70% of volume is contracted at &euro;68 under a 10-year PPA, so only the balance is exposed to this curve at a 92% capture rate.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div style="margin-top: 30px; border-top: 1px solid #15181B; padding-top: 22px;">
-                <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">6. Returns</span>
-                <h3 style="font-size: 15.5px; font-weight: 600; margin: 7px 0 14px;">What the waterfall delivers</h3>
-                <div style="display: flex; flex-direction: column;">
-                  <sc-for list="{{ returnRows }}" as="r" hint-placeholder-count="9">
-                    <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 240px); gap: 14px; padding: 10px 0; border-bottom: 1px solid #DDDFDA; align-items: baseline;">
-                      <span style="font-size: 14px; color: #5A6169;">{{ r.label }}</span>
-                      <span style="font-size: 17px; font-weight: 600; text-align: right;">{{ r.value }}</span>
-                    </div>
-                  </sc-for>
-                </div>
-                <p style="margin: 16px 0 0; font-size: 12.5px; color: #8B9198; line-height: 1.7; border-top: 1px solid #DDDFDA; padding-top: 14px;">Exit is modelled as an asset sale on a 10&times; trailing EBITDA multiple net of 1.5% costs, which is why the equity IRR runs well ahead of the unlevered project IRR. Sensitivity multipliers on generation, price, capex and opex sit on the Input sheet, and a Check sheet reconciles sources to uses, cash to balance sheet, and every reserve account back to zero at maturity.</p>
-              </div>
-            </div>
-          </sc-if>
-
-          <sc-if value="{{ hasSlot }}">
-            <div style="margin-top: 30px;">
-              <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">Output</span>
-              <h2 style="font-size: 19px; font-weight: 600; margin: 8px 0 14px;">{{ outputHead }}</h2>
-              <div style="border: 1px dashed #C4C7C0; padding: 10px; background: #FFFFFF;">
-                <image-slot id="{{ slotId }}" shape="rect" placeholder="{{ slotPlaceholder }}"></image-slot>
-              </div>
-              <p style="margin: 8px 0 0; font-size: 12px; color: #8B9198;">{{ outputCaption }}</p>
-            </div>
-          </sc-if>
-
-          <div style="margin-top: 30px;">
-            <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">{{ findingsLabel }}</span>
-            <h2 style="font-size: 19px; font-weight: 600; margin: 8px 0 10px;">{{ findingsHead }}</h2>
-            <div style="display: flex; flex-direction: column;">
-              <sc-for list="{{ findings }}" as="f" hint-placeholder-count="4">
-                <div style="padding: 11px 0; border-bottom: 1px solid #DDDFDA; display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; font-size: 15px;">
-                  <b style="color: #1F4E8C; font-weight: 600; font-size: 13px;">{{ f.n }}</b>
-                  <span>{{ f.text }}</span>
-                </div>
-              </sc-for>
-            </div>
-          </div>
-
-          <div style="margin-top: 30px;">
-            <span style="font-size: 11.5px; letter-spacing: 0.17em; text-transform: uppercase; color: #8B9198;">Tools</span>
-            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;">
-              <sc-for list="{{ tools }}" as="t" hint-placeholder-count="5">
-                <span style="{{ t.style }}">{{ t.name }}</span>
-              </sc-for>
-            </div>
-            <sc-if value="{{ isRentRoll }}">
-              <p style="margin: 18px 0 0; font-size: 13.5px; color: #5A6169;">Live version: <a href="https://simon-viater.github.io/Rotterdam-Science-Tower/" target="_blank" rel="noopener">simon-viater.github.io/Rotterdam-Science-Tower</a></p>
-            </sc-if>
-            <sc-if value="{{ isFinancing }}">
-              <p style="margin: 18px 0 0; font-size: 13.5px; color: #5A6169;">The workbook: <a href="./assets/Wind-Solar-Project-Finance-Model.xlsx" download="Wind-Solar-Project-Finance-Model.xlsx">Wind &amp; Solar Project Finance Model.xlsx &darr;</a></p>
-            </sc-if>
-            <sc-if value="{{ isMarket }}">
-              <p style="margin: 18px 0 0; font-size: 13.5px; color: #5A6169;">Want to see it when it is done? <a href="mailto:simon.viater@gmail.com">simon.viater@gmail.com</a></p>
-            </sc-if>
-          </div>
-        </div>
-      </aside>
-    </div>
-  </sc-if>
-
-  <footer style="border-top: 2px solid rgba(255,255,255,0.35);">
-    <div style="max-width: 1120px; margin: 0 auto; padding: 22px 32px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.55);">
-      <span>Šimon Viater &middot; financial modelling portfolio</span>
-      <span>All figures come from self-built case studies, not client data.</span>
-    </div>
-  </footer>
-
-</div>
-</x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;factsLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Sticky side rail&quot;,&quot;Band across the top&quot;],&quot;default&quot;:&quot;Sticky side rail&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Detail panel&quot;,&quot;label&quot;:&quot;Key figures&quot;}}">
-const ASOF = Date.UTC(2026, 7, 14);
-const ASK = { Office: 195, Lab: 250, Retail: 300 };
-const PARK = { let: 269, vacant: 353, rate: 950 };
-const STORE = { vacant: 21, rate: 1000 };
-const RAW = [
-  [21, 'Lab', 'Lab Tenant A', 1485, '2029-04-30', 250, 371250, null],
-  [20, 'Lab', 'Cerba Research', 1485, '2031-05-31', 230, 341550, null],
-  [19, 'Lab', 'Cerba Research', 1485, '2031-05-31', 230, 341550, null],
-  [18, 'Lab', 'LabHotel / Erasmus MC Incubator', 1485, '2027-12-31', 250, 371250, null],
-  [17, 'Lab', 'Cerba Research (Viroclinics-DDL)', 1485, '2032-07-31', 240, 356400, '2027-07-31'],
-  [16, 'Lab', 'Cerba Research (Viroclinics-DDL)', 1485, '2032-07-31', 240, 356400, '2027-07-31'],
-  [15, 'Office', null, 1485, null, 195, 0, null],
-  [14, 'Office', 'Tenant F', 1485, '2029-02-28', 175, 259875, null],
-  [13, 'Office', 'Henkel', 1485, '2030-10-31', 180, 267300, null],
-  [12, 'Office', 'Hardt Hyperloop', 1485, '2027-06-30', 175, 259875, null],
-  [11, 'Office', 'Erasmus Centre for Entrepreneurship', 1485, '2030-08-31', 150, 222750, null],
-  [10, 'Office', 'Esset', 1485, '2029-06-30', 180, 267300, null],
-  [9, 'Office', 'KPMG', 1485, '2029-12-31', 185, 274725, null],
-  [8, 'Office', 'Tenant B', 1485, '2028-03-31', 170, 252450, null],
-  [7, 'Office', 'Tenant A', 1485, '2026-09-30', 160, 237600, null],
-  [6, 'Office', null, 1485, null, 195, 0, null],
-  [5, 'Office', null, 1485, null, 195, 0, null],
-  [4, 'Office', null, 1485, null, 195, 0, null],
-  [3, 'Office', null, 1485, null, 195, 0, null],
-  [2, 'Office', null, 1485, null, 195, 0, null],
-  [1, 'Office', null, 1485, null, 195, 0, null],
-  [0, 'Retail', 'Coffee bar / restaurant', 800, '2029-07-31', 300, 240000, null]
-];
-const USE_COLOR = { Office: '#1F4E8C', Lab: '#17685A', Retail: '#9C6A0B' };
-const PILL_BG = { Office: '#E7EDF6', Lab: '#E2EFEB', Retail: '#F6EEDC' };
-const VAC_HATCH = 'repeating-linear-gradient(45deg,transparent,transparent 3px,#DDDFDA 3px,#DDDFDA 4px)';
-const GREENISH = /power bi|dax|star|drill|mapping|market data|html/i;
-
-class Component extends DCLogic {
-  state = {
-    open: null, hover: null, x: 0, y: 0, filter: 'all', lit: null,
-    vw: (typeof window !== 'undefined' && window.innerWidth) || 1400,
-    bodyPx: 0
-  };
-
-  asideRef = (el) => {
-    if (this._ro) { this._ro.disconnect(); this._ro = null; }
-    if (!el) { if (this.state.bodyPx) this.setState({ bodyPx: 0 }); return; }
-    const measure = () => {
-      const w = Math.round(el.getBoundingClientRect().width);
-      if (w && Math.abs(w - this.state.bodyPx) > 1) this.setState({ bodyPx: w });
-    };
-    measure();
-    if (typeof ResizeObserver !== 'undefined') {
-      this._ro = new ResizeObserver(measure);
-      this._ro.observe(el);
-    }
-  };
-
-  componentDidMount() {
-    this._fit = () => this.setState({ vw: window.innerWidth || 1400 });
-    window.addEventListener('resize', this._fit);
-    this._fit();
-    this._onKey = (e) => { if (e.key === 'Escape') this.setState({ open: null }); };
-    this._onMove = (e) => {
-      if (!this.state.hover) return;
-      this.setState({ x: e.clientX - 165, y: e.clientY - 110 });
-    };
-    window.addEventListener('keydown', this._onKey);
-    window.addEventListener('mousemove', this._onMove);
-  }
-  componentWillUnmount() {
-    if (this._ro) this._ro.disconnect();
-    window.removeEventListener('resize', this._fit);
-    window.removeEventListener('keydown', this._onKey);
-    window.removeEventListener('mousemove', this._onMove);
-  }
-
-  open(key) { return () => this.setState({ open: key, hover: null, filter: 'all', lit: null }); }
-  hover(key, label) { return (e) => this.setState({ hover: key, hoverLabel: label, x: e.clientX - 165, y: e.clientY - 110 }); }
-
-  eur(n) { return '\u20ac' + Math.round(n).toLocaleString('en-GB'); }
-  eurM(n) { return '\u20ac' + (n / 1e6).toFixed(2) + 'm'; }
-  fmtD(s) { return new Date(s + 'T00:00:00Z').toLocaleDateString('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' }); }
-  yrs(s) { return (new Date(s + 'T00:00:00Z').getTime() - ASOF) / 315360e5; }
-
-  model() {
-    const V = RAW.map((r) => {
-      const isLet = !!r[2];
-      return {
-        ord: r[0], label: r[0] === 0 ? 'GF' : String(r[0]).padStart(2, '0'),
-        use: r[1], tenant: r[2], nla: r[3], end: r[4], psm: r[5], rent: r[6], brk: r[7],
-        let: isLet, erv: isLet ? 0 : r[3] * ASK[r[1]],
-        left: r[4] ? Math.max(0, this.yrs(r[4])) : 0,
-        covenant: isLet ? r[2].replace(/^Cerba Research.*$/, 'Cerba Research') : null
-      };
-    });
-    const letV = V.filter((u) => u.let);
-    const totNLA = V.reduce((s, u) => s + u.nla, 0);
-    const letNLA = letV.reduce((s, u) => s + u.nla, 0);
-    const rent = letV.reduce((s, u) => s + u.rent, 0);
-    const vacERV = V.filter((u) => !u.let).reduce((s, u) => s + u.erv, 0);
-    const anc = PARK.let * PARK.rate;
-    return {
-      V, letV, totNLA, letNLA, vacNLA: totNLA - letNLA, rent, anc, vacERV,
-      parkERV: PARK.vacant * PARK.rate, storeERV: STORE.vacant * STORE.rate,
-      reversion: vacERV + PARK.vacant * PARK.rate + STORE.vacant * STORE.rate,
-      walt: letV.reduce((s, u) => s + u.rent * u.left, 0) / rent,
-      walb: letV.reduce((s, u) => s + u.rent * Math.max(0, this.yrs(u.brk || u.end)), 0) / rent,
-      avgPsm: rent / letNLA,
-      brkRent: letV.filter((u) => u.brk).reduce((s, u) => s + u.rent, 0)
-    };
-  }
-
-  matches(u) {
-    const f = this.state.filter;
-    return f === 'all' || (f === 'let' && u.let) || (f === 'vacant' && !u.let) || u.use === f;
-  }
-  fill(pct, color) {
-    return { height: '18px', width: Math.max(1, pct) + '%', background: color, transition: 'width 700ms cubic-bezier(0.2,0.7,0.3,1)' };
-  }
-  chipStyle(active) {
-    return {
-      fontFamily: "'Times New Roman', Times, serif", fontSize: '12.5px', letterSpacing: '0.02em',
-      padding: '6px 13px', cursor: 'pointer', transition: 'all 140ms',
-      background: active ? '#15181B' : 'transparent',
-      border: '1px solid ' + (active ? '#15181B' : '#C4C7C0'),
-      color: active ? '#F4F5F2' : '#5A6169'
-    };
-  }
-  cell(extra) {
-    return Object.assign({ padding: '11px 12px 11px 0', borderBottom: '1px solid #DDDFDA', fontSize: '13.5px', textAlign: 'right' }, extra || {});
-  }
-  setFilter(f) { return () => this.setState({ filter: f }); }
-
-  rowSkin(key, opts) {
-    const on = this.state.hover === key && !this.state.open;
-    const dim = !!(opts && opts.dim);
-    const dash = !!(opts && opts.dash);
-    return {
-      row: {
-        display: 'grid', gridTemplateColumns: '44px minmax(0, 1fr) 150px 90px', gap: '18px',
-        alignItems: 'center', cursor: 'pointer', minHeight: '92px',
-        padding: on ? '24px 22px 24px 24px' : '24px 0',
-        margin: on ? '0 -22px' : '0',
-        background: on ? '#FFFFFF' : 'transparent',
-        borderBottom: on ? '2px solid transparent' : (dash ? '2px dashed rgba(255,255,255,0.75)' : '2px solid #FFFFFF'),
-        opacity: dim && !on ? 0.6 : 1,
-        transition: 'background 180ms ease, padding 260ms cubic-bezier(0.22,1,0.36,1), margin 260ms cubic-bezier(0.22,1,0.36,1), opacity 200ms'
-      },
-      num: {
-        fontFamily: "'IBM Plex Mono', monospace", fontSize: '11.5px',
-        color: on ? 'rgba(15,61,107,0.55)' : 'rgba(255,255,255,0.6)', transition: 'color 180ms'
-      },
-      title: {
-        margin: 0, fontSize: 'clamp(26px, 3.6vw, 42px)', fontWeight: 600, lineHeight: 1,
-        color: on ? '#0F3D6B' : (dim ? 'rgba(255,255,255,0.62)' : 'rgba(255,255,255,0.72)'),
-        transition: 'color 180ms'
-      },
-      pill: {
-        justifySelf: 'start', fontFamily: "'IBM Plex Mono', monospace", fontSize: '10.5px',
-        borderRadius: '999px', padding: '6px 12px',
-        border: '1px ' + (dash ? 'dashed ' : 'solid ') + (on ? 'rgba(15,61,107,0.4)' : 'rgba(255,255,255,0.5)'),
-        color: on ? '#0F3D6B' : 'rgba(255,255,255,0.85)', transition: 'color 180ms, border-color 180ms'
-      },
-      year: {
-        fontFamily: "'IBM Plex Mono', monospace", fontSize: '11.5px',
-        color: on ? 'rgba(15,61,107,0.55)' : 'rgba(255,255,255,0.6)', transition: 'color 180ms'
-      }
-    };
-  }
-
-  finModel() {
-    const capex = [
-      ['Turbine supply & installation', 1345520000, '\u20ac880k / MW'],
-      ['Balance of plant, civils & electrical', 336380000, '\u20ac220k / MW'],
-      ['Grid connection & substation', 137610000, '\u20ac90k / MW'],
-      ['Development, permits & owner\u2019s costs', 91740000, '\u20ac60k / MW'],
-      ['Land, legal & insurance in construction', 2000000, 'entered as a total'],
-      ['Contingency at 4%', 76530000, '% of direct capex']
-    ];
-    const sources = [
-      ['Senior debt drawdowns', 1402142803],
-      ['Interest & fees capitalised', 74273957],
-      ['Equity, construction', 644180005],
-      ['Equity, DSRA funding', 88585006],
-      ['Equity, working capital & support', 1160017968]
-    ];
-    const uses = [
-      ['Capital expenditure', 1989780000],
-      ['Interest & commitment fees capitalised', 59509790],
-      ['Upfront / arrangement fee', 14764168],
-      ['DSRA funding', 88585006],
-      ['Initial working capital at COD', 56485297],
-      ['Working capital & other support', 1160017968],
-      ['Agency fees during construction', 57510]
-    ];
-    const shape = [['Jan', 0.110], ['Feb', 0.105], ['Mar', 0.100], ['Apr', 0.085], ['May', 0.070], ['Jun', 0.060], ['Jul', 0.055], ['Aug', 0.055], ['Sep', 0.070], ['Oct', 0.085], ['Nov', 0.100], ['Dec', 0.105]];
-    const price = [[2015, 82], [2018, 71], [2021, 64], [2024, 62], [2027, 64], [2030, 67], [2033, 70], [2036, 73], [2039, 76], [2042, 79]];
-    return { capex, sources, uses, shape, price };
-  }
-
-  copy() {
-    const open = this.state.open;
-    if (open === 'rentroll') return {
-      kicker: 'Excel \u00b7 Real estate \u00b7 Rotterdam',
-      title: 'Rent roll analysis of a partly-let science tower',
-      standfirst: 'A reconstructed case study on a real building: GF + 21 floors, 31,985 m\u00b2 NLA, 622 parking spaces, as at 14 Aug 2026.',
-      whatHead: 'One lease table, built from scratch, that drives every figure on the page',
-      whatBody: 'I rebuilt the rent roll of a Rotterdam science tower lease by lease (unit, floor, use, lettable area, passing rent, contract dates, break options) and derived everything from those rows: occupancy, average passing rent, WALT, WALB, covenant concentration, expiry profile and the fully-let bridge. No headline number is typed in, so changing one lease moves the whole analysis.',
-      problemHead: 'Where does the income sit, what breaks first, and what are the empty floors worth?',
-      problemBody: 'An owner holding a tower two-thirds let cannot answer those three questions from a valuation summary. The rent roll can answer all three at once, but only if it is read as a structure rather than a list: by covenant, by expiry year, and against asking terms for the space standing empty.',
-      findingsLabel: 'Findings', findingsHead: 'What the roll actually says',
-      findings: [
-        'One tenant carries 32% of contracted rent across four floors, the largest single covenant risk in the building.',
-        '20% of contracted rent expires by the end of 2027; 2029 alone is 32%.',
-        'A break option in July 2027 puts \u20ac712,800 at risk earlier than the WALT implies.',
-        'Letting the vacancy at asking terms adds \u20ac2.38m a year, 51% on top of current contracted income.'
-      ],
-      tools: ['Excel', 'Power Query', 'Lease-level rent roll', 'WALT / WALB', 'Covenant analysis'],
-      hasSlot: false
-    };
-    if (open === 'financing') return {
-      kicker: 'Excel \u00b7 Project finance \u00b7 Offshore wind',
-      title: 'Project financing a 1.5 GW offshore wind farm',
-      standfirst: 'Hollandse Kust Zuid as a case study: \u20ac1.99bn capex, 71.5% geared, sculpted senior debt to a 1.30\u00d7 DSCR, exit on an EV / EBITDA sale.',
-      whatHead: 'A monthly project finance model built from one input sheet',
-      whatBody: 'Every assumption sits on a single Input sheet: 1,529 MW installed, 4,000 MWh/MW net yield, 97% availability, 2% curtailment, a 12-month wind generation shape, capex per MW by cost item, a 30-year merchant price curve, a fixed-price PPA on 70% of volume, opex per MW, tax and working capital. A monthly Calculation sheet turns that into generation, revenue, EBITDA, a construction drawdown with capitalised interest and fees, a sculpted senior facility, reserve accounts and a waterfall down to equity. A separate Check sheet reconciles sources to uses and tests every balance back to zero.',
-      problemHead: 'How much debt will this project actually carry, and what is left for equity?',
-      problemBody: 'Offshore wind is \u20ac1.3m of capital per MW spent years before the first MWh is sold, so leverage cannot be assumed, it has to be solved. The model sizes senior debt backwards from a 1.30\u00d7 DSCR covenant on monthly CFADS rather than from a target gearing, funds interest and fees inside the facility, then shows what the waterfall leaves for equity once debt service, the DSRA and lock-up tests are satisfied.',
-      findingsLabel: 'What the model shows', findingsHead: 'Where the deal is actually decided',
-      findings: [
-        'Debt is an output, not an input: sculpting to a 1.30\u00d7 target sets the \u20ac1,476m facility, and average DSCR lands on the covenant exactly.',
-        'The facility carries \u20ac74m of capitalised interest and fees on top of capex: 6% headroom, funded before a single MWh is sold.',
-        'Equity is 71.5% geared but funds \u20ac1,161m of working capital and support, which is what actually drives the equity cash flow shape.',
-        'The exit does the heavy lifting: a 10\u00d7 EV / EBITDA sale delivers \u20ac2.67bn of net proceeds and turns a 18.7% project IRR into a 35.9% equity IRR.'
-      ],
-      tools: ['Excel', 'Monthly cash flow model', 'DSCR sculpting', 'Debt sizing', 'IRR / NPV', 'EV / EBITDA exit', 'Sensitivity multipliers'],
-      hasSlot: false,
-      facts: [
-        { label: 'Total capex', value: '\u20ac1.99bn', note: '\u20ac1.30m per MW across 1,529 MW installed' },
-        { label: 'Senior debt at COD', value: '\u20ac1,476m', note: '71.5% of funded cost, sculpted, 15-year tenor' },
-        { label: 'Project IRR', value: '18.7%', note: 'unlevered post-tax \u00b7 NPV \u20ac494m at 8%' },
-        { label: 'Equity IRR', value: '35.9%', note: '1.46\u00d7 multiple \u00b7 NPV \u20ac445m at 10%' },
-        { label: 'Minimum DSCR', value: '1.30\u00d7', note: 'the covenant that sizes the facility' }
-      ]
-    };
-    if (open === 'variance') return {
-      kicker: 'Power BI \u00b7 Cost control \u00b7 Construction',
-      title: 'Actual vs budget across six construction projects',
-      standfirst: 'A case study built on roughly 1,000 supplier invoices, modelled, measured and reported entirely in Power BI.',
-      whatHead: 'An invoice ledger turned into a report that answers questions in three clicks',
-      whatBody: 'I cleaned about 1,000 invoices in Power Query (vendors normalised, cost categories mapped, dates typed, credit notes handled), then modelled them as a star schema with projects, categories, vendors and a proper date table around the invoice fact table. DAX measures carry actuals, budget, variance and variance %, period-to-date and cumulative burn, and the report is laid out as a drill path from portfolio to project to category to the invoice line itself.',
-      problemHead: 'Which project is running hot, in which category, and which invoices caused it?',
-      problemBody: 'Invoices arrive continuously across six sites and a monthly spreadsheet is always a month behind. A controller needs the portfolio position, the project behind it and the invoices behind that, without asking six site teams to send a summary.',
-      findingsLabel: 'What the report gives a controller', findingsHead: 'From portfolio down to invoice line',
-      findings: [
-        'Portfolio variance at a glance, then per project, over or under, in euros and in percent.',
-        'Monthly burn against budget, so a slipping schedule shows up as a spend shape rather than a surprise.',
-        'The cost categories and vendors driving each overrun, with drill-through to the invoice behind any figure.'
-      ],
-      tools: ['Power BI', 'Power Query', 'DAX', 'Star schema', 'Drill-through'],
-      hasSlot: true, slotId: 'variance-shot',
-      slotPlaceholder: 'Drop a screenshot of the Power BI actual vs budget report',
-      outputHead: 'The report', outputCaption: 'Fig. 1: portfolio variance, monthly burn and category breakdown.',
-      facts: [
-        { label: 'Projects', value: '6', note: 'construction sites in one model' },
-        { label: 'Invoices', value: '~1,000', note: 'cleaned and categorised in Power Query' },
-        { label: 'Model', value: 'Star schema', note: 'invoice fact table, four dimensions' },
-        { label: 'Drill path', value: '4 levels', note: 'portfolio to project to category to invoice' }
-      ]
-    };
-    return {
-      kicker: 'Power BI \u00b7 In progress',
-      title: 'Market analysis',
-      standfirst: 'Not built yet. This is the brief I am working to.',
-      whatHead: 'The submarket context around a modelled asset',
-      whatBody: 'Rents, vacancy and take-up by submarket and asset class, mapped and trended in Power BI, with one view that places a modelled building against its comparables.',
-      problemHead: 'A passing rent means nothing without the market around it',
-      problemBody: 'The rent roll answers questions about one building. \u20ac205/m\u00b2 is only good or bad relative to what the market is doing, so the next model benchmarks it rather than comparing it to an asking price.',
-      findingsLabel: 'Planned build', findingsHead: 'Three views to build',
-      findings: [
-        'Rent and vacancy benchmarks by submarket and asset class, on a map.',
-        'Take-up and supply pipeline trends over time.',
-        'One view placing the modelled asset against its comparables.'
-      ],
-      tools: ['Power BI', 'DAX', 'Market data', 'Mapping'],
-      hasSlot: false,
-      facts: [
-        { label: 'Status', value: 'Planned', note: 'next model in the series' },
-        { label: 'Tool', value: 'Power BI', note: 'maps and trend views' },
-        { label: 'Scope', value: 'Submarkets', note: 'rents, vacancy, take-up' }
-      ]
-    };
-  }
-
-  renderVals() {
-    const st = this.state;
-    const open = st.open;
-    const hover = st.hover;
-    const showPreview = false;
-    const sticky = (this.props.factsLayout ?? 'Sticky side rail') === 'Sticky side rail' && (st.vw || 1400) >= 820;
-    const width = 1140;
-    const c = this.copy();
-    const isRentRoll = open === 'rentroll';
-
-    const out = {
-      panelOpen: !!open,
-      panelCrumb: {
-        rentroll: 'Models / 01 \u00b7 Rent roll analysis',
-        financing: 'Models / 02 \u00b7 Project financing',
-        variance: 'Models / 03 \u00b7 Actual vs budget spend',
-        market: 'Models / 04 \u00b7 Market analysis'
-      }[open] || '',
-      isRentRoll, isMarket: open === 'market',
-      openRentRoll: this.open('rentroll'),
-      openFinancing: this.open('financing'),
-      openVariance: this.open('variance'),
-      openMarket: this.open('market'),
-      close: () => this.setState({ open: null }),
-      hoverRentRoll: this.hover('rentroll'),
-      hoverFinancing: this.hover('financing', 'Financing model, screenshot to come'),
-      hoverVariance: this.hover('variance', 'Power BI report, screenshot to come'),
-      hoverMarket: this.hover('market', 'Market analysis, planned'),
-      hoverOut: () => this.setState({ hover: null }),
-      previewVisible: showPreview,
-      previewIsImage: showPreview && hover === 'rentroll',
-      previewIsLabel: showPreview && hover !== 'rentroll',
-      previewLabel: st.hoverLabel || '',
-      previewX: st.x, previewY: st.y,
-      litOut: () => this.setState({ lit: null }),
-      asideRef: this.asideRef,
-      skin1: this.rowSkin('rentroll'),
-      skin2: this.rowSkin('financing'),
-      skin3: this.rowSkin('variance'),
-      skin4: this.rowSkin('market', { dim: true, dash: true }),
-      kicker: c.kicker, title: c.title, standfirst: c.standfirst,
-      whatHead: c.whatHead, whatBody: c.whatBody,
-      problemHead: c.problemHead, problemBody: c.problemBody,
-      findingsLabel: c.findingsLabel, findingsHead: c.findingsHead,
-      findings: c.findings.map((t, i) => ({ n: String(i + 1).padStart(2, '0'), text: t })),
-      tools: c.tools.map((name) => ({
-        name,
-        style: {
-          fontSize: '12.5px', padding: '3px 10px',
-          background: GREENISH.test(name) ? '#E2EFEB' : '#E7EDF6',
-          color: GREENISH.test(name) ? '#17685A' : '#1F4E8C'
-        }
-      })),
-      hasSlot: !!c.hasSlot, slotId: c.slotId || 'slot', slotPlaceholder: c.slotPlaceholder || '',
-      outputHead: c.outputHead || '', outputCaption: c.outputCaption || '',
-      factsSticky: sticky, factsBand: !sticky,
-      asideStyle: {
-        position: 'fixed', top: 0, right: 0, bottom: 0, width: 'min(' + width + 'px, 97vw)',
-        background: '#F4F5F2', color: '#15181B', fontFamily: "'Times New Roman', Times, serif",
-        fontSize: '16.5px', lineHeight: 1.55, fontVariantNumeric: 'tabular-nums',
-        overflowY: 'auto', boxShadow: '-30px 0 80px -32px rgba(0,0,0,0.5)', zIndex: 41,
-        animation: 'panelIn 440ms cubic-bezier(0.22,1,0.36,1) both',
-        display: sticky ? 'grid' : 'block',
-        gridTemplateColumns: sticky ? '306px minmax(0, 1fr)' : undefined,
-        alignItems: sticky ? 'start' : undefined
-      },
-      panelHeadStyle: {
-        position: 'sticky', top: 0, zIndex: 3, background: '#F4F5F2',
-        borderBottom: '1px solid #15181B', padding: '16px 34px',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px',
-        gridColumn: sticky ? '1 / -1' : undefined
-      },
-      railStyle: {
-        position: 'sticky', top: '58px', padding: '28px 26px 40px',
-        borderRight: '1px solid #DDDFDA', alignSelf: 'start'
-      },
-      panelBodyStyle: {
-        padding: sticky ? '26px 34px 80px 28px' : '26px 34px 80px',
-        minWidth: 0, animation: 'fadeUp 380ms ease-out both'
-      },
-      facts: c.facts || [],
-      factsCount: (c.facts || []).length || 4,
-      floors: [], covBars: [], expBars: [], revBars: [], rows: [],
-      covNote: '', expNote: '', revNote: '', rowCount: '',
-      totalNla: '', totalPsm: '', totalRent: '', totalShare: '',
-      chipAll: this.chipStyle(st.filter === 'all'),
-      chipLet: this.chipStyle(st.filter === 'let'),
-      chipVacant: this.chipStyle(st.filter === 'vacant'),
-      chipLab: this.chipStyle(st.filter === 'Lab'),
-      chipOffice: this.chipStyle(st.filter === 'Office'),
-      chipRetail: this.chipStyle(st.filter === 'Retail'),
-      filterAll: this.setFilter('all'), filterLet: this.setFilter('let'),
-      filterVacant: this.setFilter('vacant'), filterLab: this.setFilter('Lab'),
-      filterOffice: this.setFilter('Office'), filterRetail: this.setFilter('Retail')
-    };
-
-    const panelW = st.bodyPx || Math.min(width, (st.vw || 1400) * 0.97);
-    const bodyW = Math.max(240, panelW - (sticky ? 306 : 0) - (sticky ? 62 : 68));
-    const oneCol = bodyW < 660;
-    const chartW = oneCol ? bodyW : Math.max(200, bodyW * 0.6 - 28);
-    const tight = chartW < 420;
-    const gapPx = tight ? 8 : 12;
-    const cap = (lw, vw2) => {
-      const room = chartW - 2 * gapPx - 90;
-      if (lw + vw2 <= room) return [lw, vw2];
-      const k = Math.max(0.34, room / (lw + vw2));
-      return [Math.round(lw * k), Math.round(vw2 * k)];
-    };
-    const barRow = (lw, vw2) => {
-      const p = cap(lw, vw2);
-      return {
-        display: 'grid',
-        gridTemplateColumns: 'minmax(0, ' + p[0] + 'px) minmax(90px, 1fr) minmax(0, ' + p[1] + 'px)',
-        alignItems: 'center', gap: gapPx + 'px'
-      };
-    };
-    const labelW = tight ? 96 : 172;
-    const valW = tight ? 84 : 118;
-    out.dashGrid = {
-      display: 'grid',
-      gridTemplateColumns: oneCol ? 'minmax(0, 1fr)' : 'minmax(0, 0.8fr) minmax(0, 1.2fr)',
-      borderTop: '1px solid #15181B'
-    };
-    out.elevCol = oneCol
-      ? { padding: '24px 0 28px', borderBottom: '1px solid #DDDFDA', minWidth: 0 }
-      : { padding: '24px 28px 28px 0', borderRight: '1px solid #DDDFDA', minWidth: 0 };
-    out.chartsCol = {
-      padding: oneCol ? '24px 0 28px' : '24px 0 28px 28px',
-      display: 'flex', flexDirection: 'column', gap: '28px', minWidth: 0
-    };
-    out.barCov = barRow(labelW, valW);
-    out.barExp = barRow(tight ? 44 : 56, valW);
-    out.barRev = barRow(tight ? 92 : 150, tight ? 78 : 108);
-    out.trackStyle = { height: '18px', background: '#FFFFFF', boxShadow: 'inset 0 0 0 1px #DDDFDA', display: 'flex', minWidth: 0 };
-    out.barLabelStyle = { fontSize: tight ? '11.5px' : '12.5px', color: '#5A6169', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', minWidth: 0 };
-    out.barValStyle = { fontSize: tight ? '11.5px' : '12.5px', textAlign: 'right', color: '#5A6169', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', minWidth: 0 };
-
-    out.isFinancing = open === 'financing';
-    if (out.isFinancing) {
-      const f = this.finModel();
-      const peakCap = Math.max.apply(null, f.capex.map((r) => r[1]));
-      const totCap = f.capex.reduce((s, r) => s + r[1], 0);
-      out.capexBars = f.capex.map((r, i) => ({
-        name: r[0], basis: r[2],
-        val: this.eur(r[1] / 1e6) + 'm \u00b7 ' + (r[1] / totCap * 100).toFixed(0) + '%',
-        fill: this.fill(r[1] / peakCap * 100, ['#14375F', '#2E61A9', '#5682BF', '#7FA3D4', '#A8C3E8', '#9C6A0B'][i])
-      }));
-      const totS = f.sources.reduce((s, r) => s + r[1], 0);
-      const totU = f.uses.reduce((s, r) => s + r[1], 0);
-      out.sources = f.sources.map((r) => ({ name: r[0], val: this.eur(r[1] / 1e6) + 'm', pct: (r[1] / totS * 100).toFixed(1) + '%' }));
-      out.uses = f.uses.map((r) => ({ name: r[0], val: this.eur(r[1] / 1e6) + 'm', pct: (r[1] / totU * 100).toFixed(1) + '%' }));
-      out.totalSources = this.eur(totS / 1e6) + 'm';
-      out.totalUses = this.eur(totU / 1e6) + 'm';
-      out.suBalanced = Math.abs(totS - totU) < 1000 ? 'Sources reconcile to uses (checked on the Check sheet)' : 'Difference of ' + this.eur(Math.abs(totS - totU));
-      const peakSh = Math.max.apply(null, f.shape.map((r) => r[1]));
-      out.shapeBars = f.shape.map((r) => ({
-        name: r[0], val: (r[1] * 100).toFixed(1) + '%',
-        fill: this.fill(r[1] / peakSh * 100, r[1] >= 0.1 ? '#2E61A9' : '#7FA3D4')
-      }));
-      const peakPr = Math.max.apply(null, f.price.map((r) => r[1]));
-      out.priceBars = f.price.map((r) => ({
-        name: String(r[0]), val: '\u20ac' + r[1] + ' / MWh',
-        fill: this.fill(r[1] / peakPr * 100, r[1] >= 70 ? '#2E61A9' : '#7FA3D4')
-      }));
-      out.debtTerms = [
-        ['Facility limit', '\u20ac1,476m', 'gearing 70% of capex plus 6% headroom for IDC and fees'],
-        ['Repayment', 'Sculpted', 'semi-annual, solved to a 1.30\u00d7 target DSCR'],
-        ['Tenor', '15 years from COD', 'maturing Feb 2032'],
-        ['All-in rate', '4.35% / 4.15%', 'construction / operations, 2.60% swap plus 175 / 155 bps margin'],
-        ['Fees', '1.00% + 0.60%', 'upfront on facility, commitment on undrawn, \u20ac40k p.a. agency'],
-        ['DSRA', '6% of debt at COD', '\u20ac88.6m, roughly six months of debt service'],
-        ['Lock-up', '1.15\u00d7 DSCR', 'distributions blocked below the test']
-      ].map((r) => ({ label: r[0], value: r[1], note: r[2] }));
-      out.returnRows = [
-        ['Project IRR (unlevered, post-tax)', '18.7%'],
-        ['Project NPV at 8%', '\u20ac494m'],
-        ['Equity IRR (levered, post-tax)', '35.9%'],
-        ['Equity NPV at 10%', '\u20ac445m'],
-        ['Equity multiple', '1.46\u00d7'],
-        ['Equity payback', '3.4 years from model start'],
-        ['Minimum / average DSCR', '1.30\u00d7 / 1.30\u00d7'],
-        ['Total distributions to equity', '\u20ac2,762m'],
-        ['Net exit proceeds', '\u20ac2,670m']
-      ].map((r) => ({ label: r[0], value: r[1] }));
-      out.assetRows = [
-        ['Installed capacity', '1,529 MW', '139 turbines \u00d7 11 MW'],
-        ['Net specific yield', '4,000 MWh / MW', '\u2248 46% net capacity factor'],
-        ['Availability / curtailment', '97% / 2%', 'technical availability, grid unavailability'],
-        ['Degradation', '0.2% p.a.', 'applied to net generation'],
-        ['Year 1 net generation', '5,813,870 MWh', 'shaped monthly, winter-weighted'],
-        ['Revenue mix', '70% PPA', '\u20ac68/MWh real, 50% CPI-linked, 10-year tenor'],
-        ['Merchant capture', '92% of baseload', 'plus \u20ac4/MWh guarantees of origin'],
-        ['Operating costs', '\u20ac55k / MW fixed', 'plus \u20ac3/MWh variable, escalating at 1.15\u00d7 CPI']
-      ].map((r) => ({ label: r[0], value: r[1], note: r[2] }));
-      out.suGrid = { display: 'grid', gridTemplateColumns: oneCol ? 'minmax(0, 1fr)' : 'repeat(2, minmax(0, 1fr))', gap: oneCol ? '26px' : '0', borderTop: '1px solid #15181B' };
-      out.suColA = oneCol ? { padding: '20px 0 0', minWidth: 0 } : { padding: '20px 28px 24px 0', borderRight: '1px solid #DDDFDA', minWidth: 0 };
-      out.suColB = { padding: oneCol ? '0' : '20px 0 24px 28px', minWidth: 0 };
-      const finSplit = !oneCol && bodyW >= 760;
-      const finColW = finSplit ? bodyW / 2 - 28 : bodyW;
-      const finTight = finColW < 420;
-      out.finTwo = { display: 'grid', gridTemplateColumns: finSplit ? 'repeat(2, minmax(0, 1fr))' : 'minmax(0, 1fr)', gap: finSplit ? '0' : '30px', borderTop: '1px solid #15181B' };
-      out.suColA = finSplit ? { padding: '20px 28px 24px 0', borderRight: '1px solid #DDDFDA', minWidth: 0 } : { padding: '20px 0 0', minWidth: 0 };
-      out.suColB = { padding: finSplit ? '20px 0 24px 28px' : '0', minWidth: 0 };
-      out.suGrid = { display: 'grid', gridTemplateColumns: finSplit ? 'repeat(2, minmax(0, 1fr))' : 'minmax(0, 1fr)', gap: finSplit ? '0' : '26px', borderTop: '1px solid #15181B' };
-      const fGap = finTight ? 8 : 12;
-      const finRow = (lw, vw2) => {
-        const room = finColW - 2 * fGap - 90;
-        let a = lw, b = vw2;
-        if (a + b > room) { const k = Math.max(0.34, room / (a + b)); a = Math.round(a * k); b = Math.round(b * k); }
-        return {
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0, ' + a + 'px) minmax(90px, 1fr) minmax(0, ' + b + 'px)',
-          alignItems: 'center', gap: fGap + 'px'
-        };
-      };
-      out.barShape = finRow(finTight ? 34 : 48, finTight ? 58 : 84);
-      out.barPrice = finRow(finTight ? 38 : 52, finTight ? 72 : 96);
-      out.barCapex = barRow(tight ? 130 : 230, tight ? 92 : 118);
-      if (finTight) {
-        out.barLabelStyle = Object.assign({}, out.barLabelStyle, { fontSize: '11.5px' });
-        out.barValStyle = Object.assign({}, out.barValStyle, { fontSize: '11.5px' });
-      }
-    }
-
-    if (!isRentRoll) return out;
-
-    const m = this.model();
-    out.facts = [
-      { label: 'Contracted rent', value: this.eurM(m.rent + m.anc), note: this.eur(m.rent) + ' rent, ' + this.eur(m.anc) + ' parking' },
-      { label: 'Avg passing rent', value: '\u20ac' + m.avgPsm.toFixed(0), note: 'per m\u00b2/yr on let space, against a \u20ac195\u2013250 ask' },
-      { label: 'Occupancy by NLA', value: (m.letNLA / m.totNLA * 100).toFixed(1) + '%', note: m.letNLA.toLocaleString('en-GB') + ' of ' + m.totNLA.toLocaleString('en-GB') + ' m\u00b2 let' },
-      { label: 'WALT to expiry', value: m.walt.toFixed(2) + 'y', note: 'WALB ' + m.walb.toFixed(2) + 'y \u00b7 ' + this.eur(m.brkRent) + ' breakable Jul 2027' },
-      { label: 'Upside if fully let', value: this.eurM(m.reversion), note: m.vacNLA.toLocaleString('en-GB') + ' m\u00b2 and ' + PARK.vacant + ' spaces at asking terms' }
-    ];
-    out.factsCount = 5;
-
-    out.floors = m.V.map((u) => ({
-      label: u.label,
-      barText: u.let ? u.use : 'vacant',
-      enter: () => this.setState({ lit: u.ord }),
-      bar: Object.assign({
-        flex: u.nla, height: '23px', fontSize: '11px', letterSpacing: '0.03em',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        position: 'relative', transition: 'transform 150ms, filter 150ms, opacity 200ms',
-        transform: st.lit === u.ord ? 'translateX(3px)' : 'none',
-        outline: st.lit === u.ord ? '2px solid #15181B' : 'none', outlineOffset: '2px',
-        opacity: this.matches(u) ? 1 : 0.18,
-        boxShadow: u.brk ? 'inset -7px 0 0 -3px #A33227' : (u.let ? 'none' : 'inset 0 0 0 1px #C4C7C0')
-      }, u.let
-        ? { background: USE_COLOR[u.use], color: '#FFFFFF' }
-        : { background: VAC_HATCH, color: '#5A6169' })
-    }));
-
-    const byCov = {};
-    m.letV.forEach((u) => { byCov[u.covenant] = (byCov[u.covenant] || 0) + u.rent; });
-    let covs = Object.keys(byCov).map((k) => [k, byCov[k]]).sort((a, b) => b[1] - a[1]);
-    if (covs.length > 7) {
-      const tail = covs.slice(6);
-      covs = covs.slice(0, 6).concat([[tail.length + ' other tenants', tail.reduce((s, c) => s + c[1], 0), true]]);
-    }
-    const peakC = covs[0][1];
-    out.covBars = covs.map((c2) => {
-      const share = c2[1] / m.rent;
-      const hot = share >= 0.25 && !c2[2];
-      return {
-        name: c2[0], val: this.eur(c2[1]) + ' \u00b7 ' + (share * 100).toFixed(0) + '%',
-        fill: this.fill(c2[1] / peakC * 100, hot ? '#6E97D0' : '#1F4E8C')
-      };
-    });
-    out.covNote = covs[0][0] + ' carries ' + (covs[0][1] / m.rent * 100).toFixed(0) + '% of contracted rent across '
-      + m.letV.filter((u) => u.covenant === covs[0][0]).length
-      + ' floors. The lighter bar marks any single covenant holding more than 25% of income.';
-
-    const byYear = {};
-    m.letV.forEach((u) => { const y = u.end.slice(0, 4); byYear[y] = (byYear[y] || 0) + u.rent; });
-    const years = Object.keys(byYear).sort();
-    const peakY = Math.max.apply(null, years.map((y) => byYear[y]));
-    out.expBars = years.map((y) => ({
-      name: y,
-      val: this.eur(byYear[y]) + ' \u00b7 ' + (byYear[y] / m.rent * 100).toFixed(0) + '%',
-      fill: this.fill(byYear[y] / peakY * 100, byYear[y] === peakY ? '#6E97D0' : '#1F4E8C')
-    }));
-    const near = years.filter((y) => Number(y) <= 2027).reduce((s, y) => s + byYear[y], 0);
-    const peakYr = years.filter((y) => byYear[y] === peakY)[0];
-    out.expNote = (near / m.rent * 100).toFixed(0) + '% of contracted rent expires by the end of 2027. The largest single cluster is '
-      + peakYr + ' at ' + (peakY / m.rent * 100).toFixed(0) + '%, shown in the lighter blue. The Cerba break in Jul 2027 is not counted here.';
-
-    const SHADES = ['#14375F', '#2E61A9', '#5682BF', '#7FA3D4', '#A8C3E8'];
-    const revRows = [
-      ['Contracted now', m.rent + m.anc],
-      ['Vacant floors at ask', m.vacERV],
-      ['Vacant parking at ask', m.parkERV],
-      ['Vacant storage at ask', m.storeERV],
-      ['Fully let potential', m.rent + m.anc + m.reversion]
-    ];
-    const peakR = Math.max.apply(null, revRows.map((r) => r[1]));
-    out.revBars = revRows.map((r, i) => ({
-      name: r[0], val: this.eur(r[1]), fill: this.fill(r[1] / peakR * 100, SHADES[i])
-    }));
-    out.revNote = m.vacNLA.toLocaleString('en-GB') + ' m\u00b2 and ' + PARK.vacant
-      + ' parking spaces sit empty. Let at asking terms they would add ' + this.eurM(m.reversion) + ' a year, '
-      + (m.reversion / (m.rent + m.anc) * 100).toFixed(0) + '% on top of current contracted income.';
-
-    const list = m.V.filter((u) => this.matches(u));
-    out.rows = list.map((u) => {
-      const isLit = st.lit === u.ord;
-      return {
-        label: u.label, use: u.use,
-        tenant: u.tenant || 'Available to let',
-        nla: u.nla.toLocaleString('en-GB'),
-        psm: u.let ? String(u.psm) : u.psm + ' ask',
-        rent: u.let ? this.eur(u.rent) : this.eur(u.erv) + ' ERV',
-        share: u.let ? (u.rent / m.rent * 100).toFixed(1) + '%' : '',
-        expiry: u.let ? this.fmtD(u.end) : '\u2013',
-        brk: u.brk ? this.fmtD(u.brk) : '\u2013',
-        left: u.let ? u.left.toFixed(1) + 'y' : '\u2013',
-        enter: () => this.setState({ lit: u.ord }),
-        rowStyle: { background: isLit ? '#FFFFFF' : 'transparent', boxShadow: isLit ? 'inset 0 1px 0 #15181B, inset 0 -1px 0 #15181B' : 'none', transition: 'background 120ms' },
-        pill: {
-          fontSize: '11px', letterSpacing: '0.03em', padding: '2px 8px', display: 'inline-block', whiteSpace: 'nowrap',
-          background: u.let ? PILL_BG[u.use] : 'transparent',
-          color: u.let ? USE_COLOR[u.use] : '#5A6169',
-          boxShadow: u.let ? 'none' : 'inset 0 0 0 1px #C4C7C0'
-        },
-        tenantStyle: this.cell({ textAlign: 'left', fontSize: '14px', fontWeight: u.let ? 500 : 400, fontStyle: u.let ? 'normal' : 'italic', color: u.let ? '#15181B' : '#8B9198' }),
-        rentStyle: this.cell({ color: u.let ? '#15181B' : '#8B9198' }),
-        breakStyle: this.cell({ color: u.brk ? '#A33227' : '#15181B', fontWeight: u.brk ? 500 : 400 })
-      };
-    });
-    const sum = list.reduce((a, u) => ({ n: a.n + u.nla, r: a.r + u.rent, ln: a.ln + (u.let ? u.nla : 0) }), { n: 0, r: 0, ln: 0 });
-    out.rowCount = list.length + ' of ' + m.V.length + ' floors \u00b7 ' + this.eur(sum.r) + ' p.a.';
-    out.totalNla = sum.n.toLocaleString('en-GB');
-    out.totalPsm = sum.ln ? (sum.r / sum.ln).toFixed(0) : '\u2013';
-    out.totalRent = this.eur(sum.r);
-    out.totalShare = m.rent ? (sum.r / m.rent * 100).toFixed(0) + '%' : '\u2013';
-    return out;
-  }
-}
+<script>
+const ASOF=new Date('2026-08-14T00:00:00Z');
+const ASK={Office:195,Lab:250,Retail:300};
+const PARK={let:269,vacant:353,rate:950};
+const STORE={vacant:21,rate:1000};
+const RAW=[[21,'Lab','Lab Tenant A',1485,'2029-04-30',250,371250,null],[20,'Lab','Cerba Research',1485,'2031-05-31',230,341550,null],[19,'Lab','Cerba Research',1485,'2031-05-31',230,341550,null],[18,'Lab','LabHotel / Erasmus MC Incubator',1485,'2027-12-31',250,371250,null],[17,'Lab','Cerba Research (Viroclinics-DDL)',1485,'2032-07-31',240,356400,'2027-07-31'],[16,'Lab','Cerba Research (Viroclinics-DDL)',1485,'2032-07-31',240,356400,'2027-07-31'],[15,'Office',null,1485,null,195,0,null],[14,'Office','Tenant F',1485,'2029-02-28',175,259875,null],[13,'Office','Henkel',1485,'2030-10-31',180,267300,null],[12,'Office','Hardt Hyperloop',1485,'2027-06-30',175,259875,null],[11,'Office','Erasmus Centre for Entrepreneurship',1485,'2030-08-31',150,222750,null],[10,'Office','Esset',1485,'2029-06-30',180,267300,null],[9,'Office','KPMG',1485,'2029-12-31',185,274725,null],[8,'Office','Tenant B',1485,'2028-03-31',170,252450,null],[7,'Office','Tenant A',1485,'2026-09-30',160,237600,null],[6,'Office',null,1485,null,195,0,null],[5,'Office',null,1485,null,195,0,null],[4,'Office',null,1485,null,195,0,null],[3,'Office',null,1485,null,195,0,null],[2,'Office',null,1485,null,195,0,null],[1,'Office',null,1485,null,195,0,null],[0,'Retail','Coffee bar / restaurant',800,'2029-07-31',300,240000,null]];
+const USE_COLOR={Office:'#1F4E8C',Lab:'#17685A',Retail:'#9C6A0B'}; const PILL_BG={Office:'#E7EDF6',Lab:'#E2EFEB',Retail:'#F6EEDC'};
+const FIN={capex:[['Turbine supply & installation',1345520000,'€880k / MW'],['Balance of plant, civils & electrical',336380000,'€220k / MW'],['Grid connection & substation',137610000,'€90k / MW'],['Development, permits & owner’s costs',91740000,'€60k / MW'],['Land, legal & insurance in construction',2000000,'entered as a total'],['Contingency at 4%',76530000,'% of direct capex']],sources:[['Senior debt drawdowns',1402142803],['Interest & fees capitalised',74273957],['Equity, construction',644180005],['Equity, DSRA funding',88585006],['Equity, working capital & support',1160017968]],uses:[['Capital expenditure',1989780000],['Interest & commitment fees capitalised',59509790],['Upfront / arrangement fee',14764168],['DSRA funding',88585006],['Initial working capital at COD',56485297],['Working capital & other support',1160017968],['Agency fees during construction',57510]],shape:[['Jan',.110],['Feb',.105],['Mar',.100],['Apr',.085],['May',.070],['Jun',.060],['Jul',.055],['Aug',.055],['Sep',.070],['Oct',.085],['Nov',.100],['Dec',.105]],price:[[2015,82],[2018,71],[2021,64],[2024,62],[2027,64],[2030,67],[2033,70],[2036,73],[2039,76],[2042,79]]};
+function eur(n){return '€'+Math.round(n).toLocaleString('en-GB')} function eurM(n){return '€'+(n/1e6).toFixed(2)+'m'} function years(s){return (new Date(s+'T00:00:00Z')-ASOF)/315360e5} function fmtD(s){return new Date(s+'T00:00:00Z').toLocaleDateString('en-GB',{month:'short',year:'numeric',timeZone:'UTC'})}
+const V=RAW.map(r=>{const letd=!!r[2];return{ord:r[0],label:r[0]===0?'GF':String(r[0]).padStart(2,'0'),use:r[1],tenant:r[2],nla:r[3],end:r[4],psm:r[5],rent:r[6],brk:r[7],let:letd,erv:letd?0:r[3]*ASK[r[1]],left:r[4]?Math.max(0,years(r[4])):0,covenant:letd?r[2].replace(/^Cerba Research.*$/,'Cerba Research'):null}});
+const LET=V.filter(x=>x.let); const MODEL={totNLA:V.reduce((s,u)=>s+u.nla,0),letNLA:LET.reduce((s,u)=>s+u.nla,0),rent:LET.reduce((s,u)=>s+u.rent,0),anc:PARK.let*PARK.rate,vacERV:V.filter(u=>!u.let).reduce((s,u)=>s+u.erv,0)}; MODEL.vacNLA=MODEL.totNLA-MODEL.letNLA; MODEL.parkERV=PARK.vacant*PARK.rate; MODEL.storeERV=STORE.vacant*STORE.rate; MODEL.reversion=MODEL.vacERV+MODEL.parkERV+MODEL.storeERV; MODEL.walt=LET.reduce((s,u)=>s+u.rent*u.left,0)/MODEL.rent; MODEL.walb=LET.reduce((s,u)=>s+u.rent*Math.max(0,years(u.brk||u.end)),0)/MODEL.rent; MODEL.avgPsm=MODEL.rent/MODEL.letNLA; MODEL.brkRent=LET.filter(u=>u.brk).reduce((s,u)=>s+u.rent,0);
+function barRows(rows,peak,colors){return rows.map((r,i)=>`<div class="bar-row"><div class="bar-label">${r[0]}</div><div class="track"><div class="fill" style="width:${Math.max(1,r[1]/peak*100)}%;background:${colors?colors[i%colors.length]:'#1F4E8C'}"></div></div><div class="bar-val">${r[2]||eur(r[1])}</div></div>`).join('')}
+function findings(items){return `<div class="findings">${items.map((t,i)=>`<div class="finding"><b>${String(i+1).padStart(2,'0')}</b><span>${t}</span></div>`).join('')}</div>`}
+function tools(items){return `<div class="tool-list">${items.map(n=>`<span class="tool ${/power bi|dax|star|drill|mapping|market data|html/i.test(n)?'green':''}">${n}</span>`).join('')}</div>`}
+function panelBase(meta, facts, content){return `<div class="panel-grid"><aside class="rail"><div class="facts-title">Key figures</div>${facts.map(f=>`<div class="fact"><div class="minor">${f.label}</div><b>${f.value}</b><span>${f.note}</span></div>`).join('')}</aside><div class="body"><div class="eyebrow">${meta.kicker}</div><h2>${meta.title}</h2><p class="stand">${meta.stand}</p><div class="fact-band">${facts.map(f=>`<div class="fact"><div class="minor">${f.label}</div><b>${f.value}</b></div>`).join('')}</div>${content}</div></div>`}
+function rentRoll(){const facts=[{label:'Contracted rent',value:eurM(MODEL.rent+MODEL.anc),note:`${eur(MODEL.rent)} rent, ${eur(MODEL.anc)} parking`},{label:'Avg passing rent',value:'€'+MODEL.avgPsm.toFixed(0),note:'per m²/yr on let space, against a €195–250 ask'},{label:'Occupancy by NLA',value:(MODEL.letNLA/MODEL.totNLA*100).toFixed(1)+'%',note:`${MODEL.letNLA.toLocaleString('en-GB')} of ${MODEL.totNLA.toLocaleString('en-GB')} m² let`},{label:'WALT to expiry',value:MODEL.walt.toFixed(2)+'y',note:`WALB ${MODEL.walb.toFixed(2)}y · ${eur(MODEL.brkRent)} breakable Jul 2027`},{label:'Upside if fully let',value:eurM(MODEL.reversion),note:`${MODEL.vacNLA.toLocaleString('en-GB')} m² and ${PARK.vacant} spaces at asking terms`}];
+const byCov={}; LET.forEach(u=>byCov[u.covenant]=(byCov[u.covenant]||0)+u.rent); let covs=Object.keys(byCov).map(k=>[k,byCov[k]]).sort((a,b)=>b[1]-a[1]); const peakC=covs[0][1];
+const byYear={}; LET.forEach(u=>byYear[u.end.slice(0,4)]=(byYear[u.end.slice(0,4)]||0)+u.rent); const yearsS=Object.keys(byYear).sort(); const peakY=Math.max(...yearsS.map(y=>byYear[y])); const near=yearsS.filter(y=>Number(y)<=2027).reduce((s,y)=>s+byYear[y],0); const peakYr=yearsS.find(y=>byYear[y]===peakY);
+const rev=[['Contracted now',MODEL.rent+MODEL.anc],['Vacant floors at ask',MODEL.vacERV],['Vacant parking at ask',MODEL.parkERV],['Vacant storage at ask',MODEL.storeERV],['Fully let potential',MODEL.rent+MODEL.anc+MODEL.reversion]];
+const floors=V.map(u=>`<div class="floor-row"><div class="floor-l">${u.label}</div><div style="flex:1;display:flex"><div class="floor-bar" style="flex:${u.nla};background:${u.let?USE_COLOR[u.use]:'repeating-linear-gradient(45deg,transparent,transparent 3px,#DDDFDA 3px,#DDDFDA 4px)'};color:${u.let?'#fff':'#5A6169'};${u.brk?'box-shadow:inset -7px 0 0 -3px #A33227;':''}">${u.let?u.use:'vacant'}</div></div></div>`).join('');
+const rows=V.map(u=>`<tr><td>${u.label}</td><td><span class="badge" style="background:${u.let?PILL_BG[u.use]:'transparent'};color:${u.let?USE_COLOR[u.use]:'#5A6169'};${!u.let?'box-shadow:inset 0 0 0 1px #C4C7C0':''}">${u.use}</span></td><td class="${u.let?'':'available'}">${u.tenant||'Available to let'}</td><td class="r">${u.nla.toLocaleString('en-GB')}</td><td class="r">${u.let?u.psm:u.psm+' ask'}</td><td class="r">${u.let?eur(u.rent):eur(u.erv)+' ERV'}</td><td class="r">${u.let?(u.rent/MODEL.rent*100).toFixed(1)+'%':''}</td><td class="r">${u.let?fmtD(u.end):'–'}</td><td class="r" style="color:${u.brk?'#A33227':''}">${u.brk?fmtD(u.brk):'–'}</td><td class="r">${u.let?u.left.toFixed(1)+'y':'–'}</td></tr>`).join(''); const totalNLA=V.reduce((s,u)=>s+u.nla,0), totalRent=MODEL.rent;
+return {crumb:'Models / 01 · Rent roll analysis',html:panelBase({kicker:'Excel · Real estate · Rotterdam',title:'Rent roll analysis of a partly-let science tower',stand:'A reconstructed case study on a real building: GF + 21 floors, 31,985 m² NLA, 622 parking spaces, as at 14 Aug 2026.'},facts,`<section class="panel-block"><div class="minor">What it is</div><h3>One lease table, built from scratch, that drives every figure on the page</h3><p class="panel-p">I rebuilt the rent roll of a Rotterdam science tower lease by lease (unit, floor, use, lettable area, passing rent, contract dates, break options) and derived everything from those rows: occupancy, average passing rent, WALT, WALB, covenant concentration, expiry profile and the fully-let bridge. No headline number is typed in, so changing one lease moves the whole analysis.</p></section><section class="panel-block"><div class="minor">Problem it solves</div><h3>Where does the income sit, what breaks first, and what are the empty floors worth?</h3><p class="panel-p">An owner holding a tower two-thirds let cannot answer those three questions from a valuation summary. The rent roll can answer all three at once, but only if it is read as a structure rather than a list: by covenant, by expiry year, and against asking terms for the space standing empty.</p></section><section class="panel-block"><div class="minor">Output</div><h3>The rent roll, read four ways</h3><p class="subtle">Live from the same lease table. The bars below trace the building into covenant, expiry and upside views.</p><div class="dash-grid" style="margin-top:24px"><div><div class="minor">Elevation: use and occupancy</div><div style="margin-top:16px">${floors}</div><div style="border-top:1.5px solid #15181B;margin:8px 0 4px 34px"></div><div class="legend"><span><i class="dot" style="background:#17685A"></i>Lab</span><span><i class="dot" style="background:#1F4E8C"></i>Office</span><span><i class="dot" style="background:#9C6A0B"></i>Retail</span><span><i class="dot" style="box-shadow:inset 0 0 0 1px #C4C7C0;background:repeating-linear-gradient(45deg,transparent,transparent 3px,#DDDFDA 3px,#DDDFDA 4px)"></i>Vacant</span><span><i class="break-dot"></i>Break option</span></div></div><div><div class="minor">Covenant</div><h3>Share of contracted rent by tenant</h3>${barRows(covs.map(c=>[c[0],c[1],`${eur(c[1])} · ${(c[1]/MODEL.rent*100).toFixed(0)}%`]),peakC)}</div></div><div style="margin-top:32px" class="dash-grid"><div><div class="minor">Expiry</div><h3>Contracted rent falling due by year</h3>${barRows(yearsS.map(y=>[y,byYear[y],`${eur(byYear[y])} · ${(byYear[y]/MODEL.rent*100).toFixed(0)}%`]),peakY)}</div><div><div class="minor">Upside</div><h3>Contracted income against fully let potential</h3>${barRows(rev.map(r=>[r[0],r[1],eur(r[1])]),Math.max(...rev.map(r=>r[1])),['#14375F','#2E61A9','#5682BF','#7FA3D4','#A8C3E8'])}</div></div><p class="note">${(near/MODEL.rent*100).toFixed(0)}% of contracted rent expires by the end of 2027. The largest single cluster is ${peakYr} at ${(peakY/MODEL.rent*100).toFixed(0)}%. The July 2027 Cerba break is not counted here.</p></section><section class="panel-block"><div class="minor">Detail</div><h3>Unit schedule</h3><div class="table-wrap"><table class="data-table"><thead><tr><th>Floor</th><th>Use</th><th>Tenant</th><th class="r">NLA m²</th><th class="r">€/m²</th><th class="r">Contracted rent p.a.</th><th class="r">Share</th><th class="r">Expiry</th><th class="r">Break</th><th class="r">Term left</th></tr></thead><tbody>${rows}</tbody><tfoot><tr class="tfoot"><td colspan="3">Total</td><td class="r">${totalNLA.toLocaleString('en-GB')}</td><td class="r">${(MODEL.rent/MODEL.letNLA).toFixed(0)}</td><td class="r">${eur(totalRent)}</td><td class="r">100%</td><td colspan="3"></td></tr></tfoot></table></div><p class="note">Rents are headline, net of service charge. WALT and WALB are weighted by contracted rent from 14 Aug 2026; WALB assumes every break is exercised. Parking and storage are priced at asking terms.</p></section><section class="panel-block" style="border-bottom:0">${findings(['One tenant carries 32% of contracted rent across four floors, the largest single covenant risk in the building.','20% of contracted rent expires by the end of 2027; 2029 alone is 32%.','A break option in July 2027 puts €712,800 at risk earlier than the WALT implies.','Letting the vacancy at asking terms adds €2.38m a year, 51% on top of current contracted income.'])}<div class="minor" style="margin-top:28px">Tools</div>${tools(['Excel','Power Query','Lease-level rent roll','WALT / WALB','Covenant analysis'])}</section>`)} }
+function financing(){const facts=[{label:'Total capex',value:'€1.99bn',note:'€1.30m per MW across 1,529 MW installed'},{label:'Senior debt at COD',value:'€1,476m',note:'71.5% of funded cost, sculpted, 15-year tenor'},{label:'Project IRR',value:'18.7%',note:'unlevered post-tax · NPV €494m at 8%'},{label:'Equity IRR',value:'35.9%',note:'1.46× multiple · NPV €445m at 10%'},{label:'Minimum DSCR',value:'1.30×',note:'the covenant that sizes the facility'}]; const maxC=Math.max(...FIN.capex.map(r=>r[1])); const maxSh=Math.max(...FIN.shape.map(r=>r[1])); const maxPr=Math.max(...FIN.price.map(r=>r[1])); const sums=FIN.sources.reduce((a,r)=>a+r[1],0),sumu=FIN.uses.reduce((a,r)=>a+r[1],0);
+return {crumb:'Models / 02 · Project financing',html:panelBase({kicker:'Excel · Project finance · Offshore wind',title:'Project financing a 1.5 GW offshore wind farm',stand:'Hollandse Kust Zuid as a case study: €1.99bn capex, 71.5% geared, sculpted senior debt to a 1.30× DSCR, exit on an EV / EBITDA sale.'},facts,`<section class="panel-block"><div class="minor">What it is</div><h3>A monthly project finance model built from one input sheet</h3><p class="panel-p">Every assumption sits on a single Input sheet: 1,529 MW installed, 4,000 MWh/MW net yield, 97% availability, 2% curtailment, a 12-month wind generation shape, capex per MW by cost item, a 30-year merchant price curve, a fixed-price PPA on 70% of volume, opex per MW, tax and working capital. A monthly Calculation sheet turns that into generation, revenue, EBITDA, a construction drawdown with capitalised interest and fees, a sculpted senior facility, reserve accounts and a waterfall down to equity. A separate Check sheet reconciles sources to uses and tests every balance back to zero.</p></section><section class="panel-block"><div class="minor">Problem it solves</div><h3>How much debt will this project actually carry, and what is left for equity?</h3><p class="panel-p">Offshore wind is €1.3m of capital per MW spent years before the first MWh is sold, so leverage cannot be assumed, it has to be solved. The model sizes senior debt backwards from a 1.30× DSCR covenant on monthly CFADS rather than from a target gearing, funds interest and fees inside the facility, then shows what the waterfall leaves for equity once debt service, the DSRA and lock-up tests are satisfied.</p></section><section class="panel-block"><div class="minor">Output</div><h3>The model, section by section</h3><p class="subtle">Figures below are taken straight from the workbook: the Input, Calculation and Presentation sheets.</p><section style="margin-top:24px"><div class="minor">The asset</div><h3>What is being financed</h3><div class="kv-table">${[['Installed capacity','1,529 MW','139 turbines × 11 MW'],['Net specific yield','4,000 MWh / MW','≈ 46% net capacity factor'],['Availability / curtailment','97% / 2%','technical availability, grid unavailability'],['Degradation','0.2% p.a.','applied to net generation'],['Year 1 net generation','5,813,870 MWh','shaped monthly, winter-weighted'],['Revenue mix','70% PPA','€68/MWh real, 50% CPI-linked, 10-year tenor'],['Merchant capture','92% of baseload','plus €4/MWh guarantees of origin'],['Operating costs','€55k / MW fixed','plus €3/MWh variable, escalating at 1.15× CPI']].map(r=>`<div class="kv-row"><span>${r[0]}</span><span>${r[1]}</span><span>${r[2]}</span></div>`).join('')}</div></section><section style="margin-top:30px"><div class="minor">Capital expenditure</div><h3>€1.99bn built up per MW, by cost item</h3>${barRows(FIN.capex.map(r=>[r[0],r[1],r[2]]),maxC)}</section><section style="margin-top:30px"><div class="minor">Senior debt</div><h3>Sized backwards from the covenant, not from a target ticket</h3><div class="kv-table">${[['Facility limit','€1,476m','gearing 70% of capex plus 6% headroom for IDC and fees'],['Repayment','Sculpted','semi-annual, solved to a 1.30× target DSCR'],['Tenor','15 years from COD','maturing Feb 2032'],['All-in rate','4.35% / 4.15%','construction / operations, 2.60% swap plus 175 / 155 bps margin'],['Fees','1.00% + 0.60%','upfront on facility, commitment on undrawn, €40k p.a. agency'],['DSRA','6% of debt at COD','€88.6m, roughly six months of debt service'],['Lock-up','1.15× DSCR','distributions blocked below the test']].map(r=>`<div class="kv-row"><span>${r[0]}</span><span>${r[1]}</span><span>${r[2]}</span></div>`).join('')}</div></section><section style="margin-top:30px"><div class="minor">Sources &amp; uses of funds</div><h3>€3.37bn in, €3.37bn out</h3><div class="su"><div class="su-col"><div class="su-head">Sources</div>${FIN.sources.map(r=>`<div class="money-row"><span>${r[0]}</span><span>${eur(r[1])}</span><span>${(r[1]/sums*100).toFixed(1)}%</span></div>`).join('')}<div class="total-row"><span>Total</span><span style="text-align:right;font-weight:600">${eur(sums)}</span><span></span></div></div><div class="su-col"><div class="su-head">Uses</div>${FIN.uses.map(r=>`<div class="money-row"><span>${r[0]}</span><span>${eur(r[1])}</span><span>${(r[1]/sumu*100).toFixed(1)}%</span></div>`).join('')}<div class="total-row"><span>Total</span><span style="text-align:right;font-weight:600">${eur(sumu)}</span><span></span></div></div></div><p class="balanced">${Math.abs(sums-sumu)<1000?'Sources reconcile to uses (checked on the Check sheet)':'Difference of '+eur(Math.abs(sums-sumu))}</p></section><section style="margin-top:30px"><div class="minor">Revenue drivers</div><h3>When the power arrives, and what it sells for</h3><div class="dash-grid"><div><div class="su-head">Monthly generation shape</div>${barRows(FIN.shape.map(r=>[r[0],r[1],(r[1]*100).toFixed(1)+'%']),maxSh)}</div><div><div class="su-head">Merchant baseload curve</div>${barRows(FIN.price.map(r=>[r[0],r[1],'€'+r[1]+' / MWh']),maxPr)}</div></div></section><section style="margin-top:30px"><div class="minor">Returns</div><h3>What the waterfall delivers</h3><div class="kv-table">${[['Project IRR (unlevered, post-tax)','18.7%'],['Project NPV at 8%','€494m'],['Equity IRR (levered, post-tax)','35.9%'],['Equity NPV at 10%','€445m'],['Equity multiple','1.46×'],['Equity payback','3.4 years from model start'],['Minimum / average DSCR','1.30× / 1.30×'],['Total distributions to equity','€2,762m'],['Net exit proceeds','€2,670m']].map(r=>`<div class="kv-row"><span>${r[0]}</span><span>${r[1]}</span><span></span></div>`).join('')}</div></section></section><section class="panel-block" style="border-bottom:0">${findings(['Debt is an output, not an input: sculpting to a 1.30× target sets the €1,476m facility, and average DSCR lands on the covenant exactly.','The facility carries €74m of capitalised interest and fees on top of capex: 6% headroom, funded before a single MWh is sold.','Equity is 71.5% geared but funds €1,161m of working capital and support, which is what actually drives the equity cash flow shape.','The exit does the heavy lifting: a 10× EV / EBITDA sale delivers €2.67bn of net proceeds and turns a 18.7% project IRR into a 35.9% equity IRR.'])}<div class="minor" style="margin-top:28px">Tools</div>${tools(['Excel','Monthly cash flow model','DSCR sculpting','Debt sizing','IRR / NPV','EV / EBITDA exit','Sensitivity multipliers'])}<p class="subtle" style="margin-top:18px">The workbook: <a href="./assets/Wind-Solar-Project-Finance-Model.xlsx" download="Wind-Solar-Project-Finance-Model.xlsx" style="color:#1F4E8C">Wind &amp; Solar Project Finance Model.xlsx ↓</a></p></section>`)}}
+function variance(){const facts=[{label:'Projects',value:'6',note:'construction sites in one model'},{label:'Invoices',value:'~1,000',note:'cleaned and categorised in Power Query'},{label:'Model',value:'Star schema',note:'invoice fact table, four dimensions'},{label:'Drill path',value:'4 levels',note:'portfolio to project to category to invoice'}]; return {crumb:'Models / 03 · Actual vs budget spend',html:panelBase({kicker:'Power BI · Cost control · Construction',title:'Actual vs budget across six construction projects',stand:'A case study built on roughly 1,000 supplier invoices, modelled, measured and reported entirely in Power BI.'},facts,`<section class="panel-block"><div class="minor">What it is</div><h3>An invoice ledger turned into a report that answers questions in three clicks</h3><p class="panel-p">I cleaned about 1,000 invoices in Power Query (vendors normalised, cost categories mapped, dates typed, credit notes handled), then modelled them as a star schema with projects, categories, vendors and a proper date table around the invoice fact table. DAX measures carry actuals, budget, variance and variance %, period-to-date and cumulative burn, and the report is laid out as a drill path from portfolio to project to category to the invoice line itself.</p></section><section class="panel-block"><div class="minor">Problem it solves</div><h3>Which project is running hot, in which category, and which invoices caused it?</h3><p class="panel-p">Invoices arrive continuously across six sites and a monthly spreadsheet is always a month behind. A controller needs the portfolio position, the project behind it and the invoices behind that, without asking six site teams to send a summary.</p></section><section class="panel-block"><div class="minor">Output</div><h3>The report</h3><div class="image-frame"><img src="./assets/actual-vs-budget.png" alt="Power BI actual versus budget report screenshot" onerror="this.closest('.image-frame').innerHTML='<div style=\"padding:40px;font-family:Arial,sans-serif;color:#7B8590;text-align:center\">Add your Power BI screenshot as <b>assets/actual-vs-budget.png</b> to show it here.</div>'"></div><p class="caption">Fig. 1: portfolio variance, monthly burn and category breakdown.</p></section><section class="panel-block" style="border-bottom:0">${findings(['Portfolio variance at a glance, then per project, over or under, in euros and in percent.','Monthly burn against budget, so a slipping schedule shows up as a spend shape rather than a surprise.','The cost categories and vendors driving each overrun, with drill-through to the invoice behind any figure.'])}<div class="minor" style="margin-top:28px">Tools</div>${tools(['Power BI','Power Query','DAX','Star schema','Drill-through'])}</section>`)}}
+function market(){const facts=[{label:'Status',value:'Planned',note:'next model in the series'},{label:'Tool',value:'Power BI',note:'maps and trend views'},{label:'Scope',value:'Submarkets',note:'rents, vacancy, take-up'}]; return {crumb:'Models / 04 · Market analysis',html:panelBase({kicker:'Power BI · In progress',title:'Market analysis',stand:'Not built yet. This is the brief I am working to.'},facts,`<section class="panel-block"><div class="minor">What it is</div><h3>The submarket context around a modelled asset</h3><p class="panel-p">Rents, vacancy and take-up by submarket and asset class, mapped and trended in Power BI, with one view that places a modelled building against its comparables.</p></section><section class="panel-block"><div class="minor">Problem it solves</div><h3>A passing rent means nothing without the market around it</h3><p class="panel-p">The rent roll answers questions about one building. €205/m² is only good or bad relative to what the market is doing, so the next model benchmarks it rather than comparing it to an asking price.</p></section><section class="panel-block" style="border-bottom:0"><div class="minor">Planned build</div><h3>Three views to build</h3>${findings(['Rent and vacancy benchmarks by submarket and asset class, on a map.','Take-up and supply pipeline trends over time.','One view placing the modelled asset against its comparables.'])}<div class="minor" style="margin-top:28px">Tools</div>${tools(['Power BI','DAX','Market data','Mapping'])}<p class="subtle" style="margin-top:18px">Want to see it when it is done? <a href="mailto:simon.viater@gmail.com" style="color:#1F4E8C">simon.viater@gmail.com</a></p></section>`)}}
+const DATA={rentroll,financing,variance,market};
+function openProject(key){const d=DATA[key](); document.getElementById('crumb').textContent=d.crumb; document.getElementById('panelContent').innerHTML=d.html; document.getElementById('overlay').classList.add('open'); document.getElementById('panel').classList.add('open'); document.getElementById('panel').setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'}
+function closePanel(){document.getElementById('overlay').classList.remove('open');document.getElementById('panel').classList.remove('open');document.getElementById('panel').setAttribute('aria-hidden','true');document.body.style.overflow=''}
+document.querySelectorAll('.project-row').forEach(r=>r.addEventListener('click',()=>openProject(r.dataset.project)));
+document.getElementById('close').addEventListener('click',closePanel); document.getElementById('overlay').addEventListener('click',closePanel); document.addEventListener('keydown',e=>{if(e.key==='Escape')closePanel()});
 </script>
 </body>
 </html>
